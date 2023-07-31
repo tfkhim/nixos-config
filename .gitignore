@@ -1,0 +1,5 @@
+# Output of the `nix build` command
+result
+
+# `nix run` creates the disk image in the current directory
+*.qcow2
