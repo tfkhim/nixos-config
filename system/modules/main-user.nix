@@ -10,6 +10,7 @@ let
   cfg = config.users.mainUser;
   enableHomeManager = builtins.length cfg.homeManagerModules > 0;
   sudoEnabled = config.security.sudo.enable;
+  networkmanagerEnabled = config.networking.networkmanager.enable;
 in
 {
   options = with lib; {
@@ -55,7 +56,8 @@ in
       shell = pkgs.zsh;
 
       extraGroups = with lib; [ ]
-        ++ optional sudoEnabled "wheel";
+        ++ optional sudoEnabled "wheel"
+        ++ optional networkmanagerEnabled "networkmanager";
     };
 
     home-manager.users.mainUser = lib.mkIf enableHomeManager {
