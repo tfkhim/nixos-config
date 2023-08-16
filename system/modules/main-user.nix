@@ -10,6 +10,7 @@ let
   mainUserName = config.users.mainUser;
   cfg = config.users.users.${mainUserName};
   sudoEnabled = config.security.sudo.enable;
+  networkmanagerEnabled = config.networking.networkmanager.enable;
 in
 {
   options.users.mainUser = with lib; mkOption {
@@ -26,7 +27,8 @@ in
       shell = pkgs.zsh;
 
       extraGroups = with lib; [ ]
-        ++ optional sudoEnabled "wheel";
+        ++ optional sudoEnabled "wheel"
+        ++ optional networkmanagerEnabled "networkmanager";
     };
 
     home-manager.users.${mainUserName}.home = {

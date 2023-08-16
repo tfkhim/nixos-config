@@ -36,6 +36,7 @@
 
   environment.systemPackages = with pkgs; [
     git
+    dig
   ];
 
   home-manager = {
