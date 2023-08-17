@@ -65,6 +65,18 @@
 
             home-manager.users.nixos.imports = [ self.homeManagerModules.cli-user ];
 
+            # For running Sway in a QEMU VM the Arch Linux Wiki recommends to use
+            # the QXL virtualized graphics card:
+            # https://wiki.archlinux.org/title/sway#Virtualization
+            # The screen resolution isn't automatically scaled. Full HD seems to
+            # be a good default that should work on most systems well.
+            virtualisation.qemu.options = [ "-device qxl-vga,xres=1920,yres=1080" ];
+
+            # The Arch Linux Wiki suggests using the qxl and bochs_drm kernel
+            # modules:
+            # https://wiki.archlinux.org/title/QEMU#qxl
+            boot.kernelModules = [ "qxl" "bochs_drm" ];
+
             virtualisation.forwardPorts = [
               (lib.mkIf opensshEnabled { from = "host"; proto = "tcp"; host.port = 2222; guest.port = 22; })
             ];
