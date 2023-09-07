@@ -16,77 +16,112 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # This flake doesn't follow nixpkgs by intention. It should
+    # be built with the same Rust toolchain version that was also
+    # used for building and testing by the upstream project.
+    sway-workspace-extras = {
+      url = "github:tfkhim/sway-workspace-extras";
+    };
+
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-generators, ... }: {
-    nixosModules =
-      let
-        addHomeManagerModule = rootModule: {
-          imports = [
-            home-manager.nixosModules.home-manager
-            rootModule
-          ];
+  outputs = { self, nixpkgs, home-manager, sway-workspace-extras, nixos-generators, ... }:
+    let
+      # The overlays required by home manager modules must also be added to the
+      # NixOS system overlay configuration. This is due to a difference in the
+      # standalone vs. as NixOS module usage patterns. In the NixOS module case
+      # with useGlobalPkgs turned on the home manager modules get the system
+      # pkgs as configured by the NixOS modules. The overlays configured
+      # by home manager modules won't be applied to the system pkgs attribute
+      # set.
+      homeManagerOverlays = [
+        sway-workspace-extras.overlays.addPackage
+      ];
 
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-          };
+      addHomeManagerModule = rootModule: {
+        imports = [
+          home-manager.nixosModules.home-manager
+          rootModule
+        ];
+
+        nixpkgs.overlays = [ ]
+          ++ homeManagerOverlays;
+
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
         };
-      in
-      {
-        default = self.nixosModules.single-user;
-        single-user = addHomeManagerModule ./system/single-user.nix;
       };
 
-    homeManagerModules = {
-      default = self.homeManagerModules.cli-user;
-      cli-user = ./home/cli-user.nix;
-    };
+      addHomeManagerOverlays = rootModule: {
+        imports = [ rootModule ];
 
-    packages.x86_64-linux.default = self.packages.x86_64-linux.vm;
+        nixpkgs.overlays = homeManagerOverlays;
+      };
+    in
+    {
+      nixosModules = {
+        default = self.nixosModules.single-user;
+        single-user = addHomeManagerModule ./system/single-user.nix;
+        sway-desktop = addHomeManagerModule ./system/sway-desktop.nix;
+      };
 
-    packages.x86_64-linux.vm = nixos-generators.nixosGenerate {
-      system = "x86_64-linux";
-      format = "vm";
-      modules = [
-        self.nixosModules.single-user
-        ({ config, lib, ... }:
-          let
-            opensshEnabled = config.services.openssh.enable;
-          in
-          {
-            networking.hostName = "test";
+      homeManagerModules = {
+        default = self.homeManagerModules.cli-user;
+        cli-user = addHomeManagerOverlays ./home/cli-user.nix;
+        sway-desktop = addHomeManagerOverlays ./home/sway-desktop.nix;
+      };
 
-            users.mainUser = {
-              password = "nixos";
-              homeManagerModules = [
-                self.homeManagerModules.cli-user
+      packages.x86_64-linux.default = self.packages.x86_64-linux.vm;
+
+      packages.x86_64-linux.vm = nixos-generators.nixosGenerate {
+        system = "x86_64-linux";
+        format = "vm";
+        modules = [
+          self.nixosModules.sway-desktop
+          ({ config, lib, ... }:
+            let
+              opensshEnabled = config.services.openssh.enable;
+            in
+            {
+              networking.hostName = "test";
+
+              users.mainUser = {
+                password = "nixos";
+                homeManagerModules = [
+                  self.homeManagerModules.sway-desktop
+                  {
+                    desktops.sway.programs = {
+                      swaymsg = "${config.programs.sway.package}/bin/swaymsg";
+                      wpctl = "${config.services.pipewire.wireplumber.package}/bin/wpctl";
+                    };
+                  }
+                ];
+              };
+
+              # For running Sway in a QEMU VM the Arch Linux Wiki recommends to use
+              # the QXL virtualized graphics card:
+              # https://wiki.archlinux.org/title/sway#Virtualization
+              # The screen resolution isn't automatically scaled. Full HD seems to
+              # be a good default that should work on most systems well.
+              virtualisation.qemu.options = [ "-device qxl-vga,xres=1920,yres=1080" ];
+
+              # The Arch Linux Wiki suggests using the qxl and bochs_drm kernel
+              # modules:
+              # https://wiki.archlinux.org/title/QEMU#qxl
+              boot.kernelModules = [ "qxl" "bochs_drm" ];
+
+              virtualisation.forwardPorts = [
+                (lib.mkIf opensshEnabled { from = "host"; proto = "tcp"; host.port = 2222; guest.port = 22; })
               ];
-            };
+            })
+        ];
+      };
 
-            # For running Sway in a QEMU VM the Arch Linux Wiki recommends to use
-            # the QXL virtualized graphics card:
-            # https://wiki.archlinux.org/title/sway#Virtualization
-            # The screen resolution isn't automatically scaled. Full HD seems to
-            # be a good default that should work on most systems well.
-            virtualisation.qemu.options = [ "-device qxl-vga,xres=1920,yres=1080" ];
-
-            # The Arch Linux Wiki suggests using the qxl and bochs_drm kernel
-            # modules:
-            # https://wiki.archlinux.org/title/QEMU#qxl
-            boot.kernelModules = [ "qxl" "bochs_drm" ];
-
-            virtualisation.forwardPorts = [
-              (lib.mkIf opensshEnabled { from = "host"; proto = "tcp"; host.port = 2222; guest.port = 22; })
-            ];
-          })
-      ];
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
     };
-
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
-  };
 }
