@@ -7,7 +7,7 @@
 
 { config, pkgs, lib, ... }:
 let
-  inherit (lib) types mkOption;
+  inherit (lib) types mkOption mkIf;
 
   cfg = config.desktops.sway;
 
@@ -89,6 +89,29 @@ in
         default = [ pkgs.liberation_ttf ];
       };
     };
+
+    xdg.portal.restart.enable = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        Enable a race condition fix for xdg-desktop-portal.
+
+        The xdg-desktop-portal D-Bus bindings are started as part of the
+        Sway startup process. The Systemd unit providing those bindings
+        requires some of the environment variables set by the Sway
+        Systemd integration. Setting the environment variables seems to
+        run asynchronous to the xdg-desktop-portal unit start. This leads
+        to a race condition. If the xdg-desktop-portal unit starts before
+        the new environment variables are set it will hang for about 25
+        seconds. Waybar will also query the XDG Desktop Portal D-Bus
+        interface. This leads to a 25 second delay until Waybar shows
+        up.
+
+        This workaround restarts the xdg-desktop-portal service to force
+        it to use the environment variables set by Sway.
+      '';
+
+    };
   };
 
   config = {
@@ -107,6 +130,23 @@ in
     wayland.windowManager.sway = {
       enable = true;
       package = null;
+    };
+
+    systemd.user.services.restart-xdg-desktop-portal = mkIf cfg.xdg.portal.fix.enable {
+      Unit = {
+        Description =
+          "Restarts xdg-desktop-portal to force it to use the new environment variables.";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+
+      Service = {
+        Type = "oneshot";
+        ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
+        ExecStart = "${pkgs.systemd}/bin/systemctl --user --force restart xdg-desktop-portal";
+      };
+
+      Install = { WantedBy = [ "graphical-session.target" ]; };
     };
   };
 }
