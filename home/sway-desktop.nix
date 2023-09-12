@@ -43,6 +43,7 @@ in
     ./modules/sway/theming.nix
     ./modules/sway/waybar.nix
     ./modules/sway/screenlocking.nix
+    ./modules/sway/kitty.nix
   ];
 
   options.desktops.sway = {
@@ -108,10 +109,6 @@ in
     ] ++ cfg.fonts.extraPackages;
 
     fonts.fontconfig.enable = true;
-
-    programs.kitty = {
-      enable = true;
-    };
 
     wayland.windowManager.sway = {
       enable = true;
