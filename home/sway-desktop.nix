@@ -44,6 +44,7 @@ in
     ./modules/sway/waybar.nix
     ./modules/sway/screenlocking.nix
     ./modules/sway/kitty.nix
+    ./modules/sway/dunst.nix
   ];
 
   options.desktops.sway = {
