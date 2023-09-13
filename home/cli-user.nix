@@ -10,12 +10,8 @@
 {
   imports = [
     ./modules/base.nix
+    ./modules/zsh.nix
   ];
-
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-  };
 
   home.packages = with pkgs; [
     delta
