@@ -11,6 +11,7 @@
   imports = [
     ./modules/base.nix
     ./modules/zsh.nix
+    ./modules/powerlevel10k.nix
   ];
 
   home.packages = with pkgs; [
