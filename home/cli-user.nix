@@ -12,6 +12,7 @@
     ./modules/base.nix
     ./modules/zsh.nix
     ./modules/powerlevel10k.nix
+    ./modules/ssh
   ];
 
   home.packages = with pkgs; [
