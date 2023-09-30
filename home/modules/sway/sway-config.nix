@@ -27,6 +27,9 @@ let
   workspaceExtrasPkg = inputs.sway-workspace-extras.packages.${pkgs.system}.default;
   sway-workspace-extras = getExe workspaceExtrasPkg;
 
+  nwgBar = "${config.programs.nwg-bar.package}/bin/nwg-bar";
+  nwgBarEnabled = config.programs.nwg-bar.enable;
+
   swaylock = config.desktops.sway.programs.swaylock;
   swaylockEnabled = swaylock != null;
 
@@ -163,6 +166,9 @@ in
       }
       (mkIf swaylockEnabled {
         "Ctrl+Alt+l" = "exec ${swaylock}";
+      })
+      (mkIf nwgBarEnabled {
+        "Ctrl+Alt+Delete" = "exec ${nwgBar}";
       })
       (mkIf wpctlEnabled {
         "XF86AudioRaiseVolume" = "exec ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+";

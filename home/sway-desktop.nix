@@ -45,6 +45,7 @@ in
     ./modules/sway/screenlocking.nix
     ./modules/sway/kitty.nix
     ./modules/sway/dunst.nix
+    ./modules/sway/nwg-bar.nix
   ];
 
   options.desktops.sway = {
@@ -65,6 +66,8 @@ in
     programs = {
       swaymsg = mkProgramPath "swaymsg";
       wpctl = mkProgramPath "wpctl";
+      systemctl = mkProgramPath "systemctl";
+      loginctl = mkProgramPath "loginctl";
 
       # swaylock requires some PAM setup to be able to unlock the user
       # session. Not all combinations of executable and PAM setup seem

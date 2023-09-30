@@ -84,6 +84,8 @@
                   desktops.sway.programs = {
                     swaymsg = "${config.programs.sway.package}/bin/swaymsg";
                     wpctl = "${config.services.pipewire.wireplumber.package}/bin/wpctl";
+                    systemctl = "${config.systemd.package}/bin/systemctl";
+                    loginctl = "${config.systemd.package}/bin/loginctl";
                     swaylock = lib.getExe pkgs.swaylock;
                   };
                 }

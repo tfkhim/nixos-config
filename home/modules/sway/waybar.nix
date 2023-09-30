@@ -7,12 +7,17 @@
 
 { config, pkgs, lib, ... }:
 let
+  inherit (lib) mkIf;
+
   # Unicode 2004: Three-Per-Em Space
   iconSeparator = " ";
   # Unicode 2003: Em Space
   segmentSeparator = " ";
 
   pavucontrol = lib.getExe pkgs.pavucontrol;
+
+  nwgBarEnabled = config.programs.nwg-bar.enable;
+  nwgBar = "${config.programs.nwg-bar.package}/bin/nwg-bar";
 
   makeBatteryConfig = bat: {
     inherit bat;
@@ -55,7 +60,9 @@ in
       "battery#bat1"
       "clock#date"
       "clock#time"
+      (mkIf nwgBarEnabled "custom/bar")
     ];
+
     "sway/workspaces" = {
       format = "<b>{}</b>";
     };
@@ -111,6 +118,11 @@ in
     };
     "clock#time" = {
       format = "<b>{:%H:%M}</b>${iconSeparator}";
+    };
+    "custom/bar" = mkIf nwgBarEnabled {
+      format = "";
+      tooltip = false;
+      on-click = nwgBar;
     };
   }];
 }

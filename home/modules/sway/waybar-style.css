@@ -23,15 +23,7 @@ tooltip {
     background: #3584e4;
 }
 
-#clock,
-#battery,
-#cpu,
-#memory,
-#backlight,
-#network,
-#pulseaudio,
-#tray,
-#mode {
+.modules-right * {
     padding: 0 5px;
 }
 
