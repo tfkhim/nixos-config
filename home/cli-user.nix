@@ -11,6 +11,7 @@
     ./modules/zsh.nix
     ./modules/powerlevel10k.nix
     ./modules/ssh
+    ./modules/gpg.nix
     ./modules/git.nix
   ];
 }
