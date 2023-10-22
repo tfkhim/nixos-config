@@ -6,13 +6,8 @@
 # received a copy of the license along with this program.
 
 {
-  imports = [
-    ./modules/base.nix
-    ./modules/zsh.nix
-    ./modules/powerlevel10k.nix
-    ./modules/ssh
-    ./modules/gpg.nix
-    ./modules/git.nix
-    ./modules/neovim.nix
-  ];
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+  };
 }
