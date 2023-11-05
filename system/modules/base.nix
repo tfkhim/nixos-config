@@ -24,6 +24,11 @@
     # reuse of the existing entries in the store. In general
     # this should make those commands more efficient.
     registry.nixpkgs.flake = inputs.nixpkgs;
+
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 10d";
+    };
   };
 
   time.timeZone = "Europe/Berlin";
