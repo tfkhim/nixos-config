@@ -80,4 +80,13 @@
   programs.kitty.keybindings = {
     "ctrl+shift+t" = "new_os_window_with_cwd";
   };
+
+  # The Kitty shell integration adds an alias for sudo to ensure the
+  # TERMINFO environment variable is set correctly. This alias doesn't
+  # end with a space. This prevents tab completion to work properly.
+  # Therefore this part of the shell integration is disabled. This might
+  # not be necessary in a future version of Kitty:
+  # https://github.com/kovidgoyal/kitty/commit/492ec3dfbf3be6f27603baabb5c2844f91436e04
+  # https://github.com/kovidgoyal/kitty/commit/2aa37de6ffcdd869402283682589b0f405a5f64f
+  programs.kitty.shellIntegration.mode = "no-sudo";
 }
