@@ -41,12 +41,7 @@ in
             '';
             type = with types; oneOf [ str path ];
 
-            # Version 0.1.3 of nwg-bar doesn't contain images for hibernate
-            # and suspend. On the main branch those images got added in the
-            # mean time. So for now we still have to use breeze icons for the 
-            # default icons. But with a future release of nwg-bar this can be
-            # changed to the ones included with nwg-bar.
-            default = "${pkgs.libsForQt5.breeze-icons}/share/icons/breeze-dark/actions/32/${defaultIcon}.svg";
+            default = "${cfg.package}/share/nwg-bar/images/${defaultIcon}.svg";
           };
         };
       in
@@ -78,7 +73,7 @@ in
     assertions = [
       {
         assertion = systemctl != null && loginctl != null;
-        message = "The paths 'desktops.sway.programs.systemctl' and 'desktops.sway.programs.loginctl' must be specified.";
+        message = "The options 'desktops.sway.programs.systemctl' and 'desktops.sway.programs.loginctl' must be specified.";
       }
     ];
 

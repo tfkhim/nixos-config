@@ -51,4 +51,15 @@ in
     gtk.enable = true;
     x11.enable = true;
   };
+
+  programs.nwg-bar.actions =
+    let
+      actionIcons = "${pkgs.libsForQt5.breeze-icons}/share/icons/breeze-dark/actions/32";
+    in
+    {
+      logout.icon = "${actionIcons}/system-log-out.svg";
+      reboot.icon = "${actionIcons}/system-reboot.svg";
+      hibernate.icon = "${actionIcons}/system-hibernate.svg";
+      shutdown.icon = "${actionIcons}/system-shutdown.svg";
+    };
 }
