@@ -7,9 +7,8 @@
 
 {
   imports = [
-    ./modules/base.nix
-    ./modules/sshd.nix
-    ./modules/networking.nix
-    ./modules/main-user.nix
+    ./single-user.nix
+    ./modules/keyboard-remapping.nix
+    ./modules/virtualisation.nix
   ];
 }

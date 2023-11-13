@@ -7,7 +7,7 @@
 
 {
   imports = [
-    ./single-user.nix
+    ./base-desktop.nix
   ];
 
   programs.sway = {
