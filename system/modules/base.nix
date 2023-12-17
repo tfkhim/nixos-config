@@ -42,6 +42,7 @@
   environment.systemPackages = with pkgs; [
     git
     dig
+    usbutils
   ];
 
   home-manager = {
