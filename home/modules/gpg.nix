@@ -17,6 +17,8 @@
 
   services.gpg-agent = {
     enable = true;
-    pinentryFlavor = "gtk2";
+    # Also refer to the base-desktop.nix file in the system
+    # configuration for the required gcr DBus service.
+    pinentryFlavor = "gnome3";
   };
 }
