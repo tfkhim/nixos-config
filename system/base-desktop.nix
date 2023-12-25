@@ -20,4 +20,9 @@
   # See:
   # * https://nix-community.github.io/home-manager/options.xhtml#opt-services.gpg-agent.pinentryFlavor
   services.dbus.packages = [ pkgs.gcr ];
+
+  # This service allows other tools running as a non-privileged
+  # user to mount and manipulate devices. This is a requirement
+  # for the udiskie service in the base.nix home manager module.
+  services.udisks2.enable = true;
 }
