@@ -11,7 +11,6 @@ let
   cfg = config.users.users.${mainUserName};
   sudoEnabled = config.security.sudo.enable;
   networkmanagerEnabled = config.networking.networkmanager.enable;
-  libvirtdEnabled = config.virtualisation.libvirtd.enable;
 in
 {
   options.users.mainUser = with lib; mkOption {
@@ -29,8 +28,7 @@ in
 
       extraGroups = with lib; [ ]
         ++ optional sudoEnabled "wheel"
-        ++ optional networkmanagerEnabled "networkmanager"
-        ++ optional libvirtdEnabled "libvirtd";
+        ++ optional networkmanagerEnabled "networkmanager";
     };
 
     home-manager.users.${mainUserName}.home = {

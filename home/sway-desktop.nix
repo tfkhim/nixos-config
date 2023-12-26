@@ -38,7 +38,7 @@ let
 in
 {
   imports = [
-    ./cli-user.nix
+    ./base-desktop.nix
     ./modules/sway/sway-config.nix
     ./modules/sway/theming.nix
     ./modules/sway/waybar.nix
