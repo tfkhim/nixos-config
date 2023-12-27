@@ -46,6 +46,7 @@ in
     ./modules/sway/kitty.nix
     ./modules/sway/dunst.nix
     ./modules/sway/nwg-bar.nix
+    ./modules/sway/polkit-agent.nix
   ];
 
   options.desktops.sway = {
