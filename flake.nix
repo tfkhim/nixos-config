@@ -9,7 +9,10 @@
   description = "A flake containing NixOS modules I use to build my systems";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    # This flake doesn't use a nixpkgs-* channel here because it isn't
+    # as thoroughly tested as the nixos-* variant. See:
+    # https://discourse.nixos.org/t/differences-between-nix-channels/13998
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
