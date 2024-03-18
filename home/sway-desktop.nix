@@ -119,5 +119,7 @@ in
       enable = true;
       package = null;
     };
+
+    services.kanshi.enable = true;
   };
 }
