@@ -5,7 +5,7 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, lib, ... }:
+{ pkgs, config, lib, ... }:
 
 {
   programs.gpg = {
@@ -19,6 +19,6 @@
     enable = true;
     # Also refer to the base-desktop.nix file in the system
     # configuration for the required gcr DBus service.
-    pinentryFlavor = "gnome3";
+    pinentryPackage = pkgs.pinentry-gnome3;
   };
 }

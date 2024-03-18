@@ -14,11 +14,11 @@
     ./modules/virtualisation.nix
   ];
 
-  # This is needed by the pinentry gnome3 flavor. We enable it
+  # This is needed by the pinentry gnome3 package. We enable it
   # in the desktop base file because it may be required by
   # different environments.
   # See:
-  # * https://nix-community.github.io/home-manager/options.xhtml#opt-services.gpg-agent.pinentryFlavor
+  # https://nix-community.github.io/home-manager/options.xhtml#opt-services.gpg-agent.pinentryPackage
   services.dbus.packages = [ pkgs.gcr ];
 
   # This service allows other tools running as a non-privileged
