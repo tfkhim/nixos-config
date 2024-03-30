@@ -91,6 +91,9 @@
               system.stateVersion = config.system.nixos.release;
 
               networking.hostName = "test";
+              time.timeZone = "Europe/Berlin";
+              i18n.defaultLocale = "de_DE.UTF-8";
+              console.keyMap = "de-latin1";
 
               users.users.nixos.password = "nixos";
 

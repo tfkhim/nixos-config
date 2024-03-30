@@ -26,12 +26,6 @@
     };
   };
 
-  time.timeZone = "Europe/Berlin";
-
-  i18n.defaultLocale = "de_DE.UTF-8";
-
-  console.keyMap = "de-latin1";
-
   users.mutableUsers = false;
 
   environment.systemPackages = with pkgs; [
