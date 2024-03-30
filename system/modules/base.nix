@@ -8,11 +8,6 @@
 { pkgs, inputs, ... }:
 
 {
-  # Declare which NixOS release the configuration is
-  # compatible with. This avoids accidental introduction
-  # of backwards incompatible changes.
-  system.stateVersion = "23.11";
-
   nixpkgs.config.allowUnfree = true;
 
   nix = {

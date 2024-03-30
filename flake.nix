@@ -77,6 +77,8 @@
               opensshEnabled = config.services.openssh.enable;
             in
             {
+              system.stateVersion = config.system.nixos.release;
+
               networking.hostName = "test";
 
               users.users.nixos.password = "nixos";
@@ -84,6 +86,8 @@
               home-manager.users.nixos.imports = [
                 self.homeManagerModules.sway-desktop
                 {
+                  home.stateVersion = config.system.stateVersion;
+
                   desktops.sway.programs = {
                     swaymsg = "${config.programs.sway.package}/bin/swaymsg";
                     wpctl = "${config.services.pipewire.wireplumber.package}/bin/wpctl";

@@ -6,11 +6,6 @@
 # received a copy of the license along with this program.
 
 {
-  # Declare which Home Manager release the configuration is
-  # compatible with. This avoids accidental introduction of
-  # backwards incompatible changes.
-  home. stateVersion = "23.11";
-
   # We also need to run the Nix garbage collector as the
   # Home Manager user. Because the generations in the
   # ~/.local/state/nix/profiles directory aren't deleted
