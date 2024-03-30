@@ -19,6 +19,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # This flake doesn't follow nixpkgs by intention. It should
     # be built with the same Rust toolchain version that was also
     # used for building and testing by the upstream project.
@@ -32,14 +37,15 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-generators, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, sops-nix, nixos-generators, ... }@inputs:
     let
-      provideFlakeInputs = rootModule: {
-        # The _modules.args option can not be used to add modules
+      provideFlakeInputsToSystemConfig = rootModule: {
+        # The _modules.args option can't be used to add modules
         # from flakes to the imports. Therefore we import the
         # required modules in this wrapper.
         imports = [
           home-manager.nixosModules.home-manager
+          sops-nix.nixosModules.sops
           rootModule
         ];
 
@@ -47,7 +53,12 @@
       };
 
       provideFlakeInputsToHomeManager = rootModule: {
-        imports = [ rootModule ];
+        # This imports follow the same reasoning as in
+        # provideFlakeInputsToSystemConfig above.
+        imports = [
+          sops-nix.homeManagerModules.sops
+          rootModule
+        ];
 
         _module.args.inputs = inputs;
       };
@@ -55,8 +66,8 @@
     {
       nixosModules = {
         default = self.nixosModules.single-user;
-        single-user = provideFlakeInputs ./system/single-user.nix;
-        sway-desktop = provideFlakeInputs ./system/sway-desktop.nix;
+        single-user = provideFlakeInputsToSystemConfig ./system/single-user.nix;
+        sway-desktop = provideFlakeInputsToSystemConfig ./system/sway-desktop.nix;
       };
 
       homeManagerModules = {
