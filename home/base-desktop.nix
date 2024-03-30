@@ -12,4 +12,9 @@
     ./cli-user.nix
     ./modules/virtualisation.nix
   ];
+
+  # This service automatically mounts removable media. It
+  # requires the udisks2 system service which is enabled in
+  # the base-desktop.nix system module.
+  services.udiskie.enable = true;
 }

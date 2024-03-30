@@ -75,9 +75,4 @@
     # https://github.com/nix-community/nix-direnv/blob/master/direnvrc#L282
     nix-direnv.enable = true;
   };
-
-  # This service automatically mounts removable media. It
-  # requires the udisks2 system service which is enabled in
-  # the base-desktop.nix system module.
-  services.udiskie.enable = true;
 }
