@@ -5,11 +5,13 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, pkgs, lib, ... }:
+{ config, osConfig ? null, pkgs, lib, ... }:
 let
-  inherit (lib) types mkOption;
+  inherit (lib) types mkOption mkIf mkDefault;
 
   cfg = config.desktops.sway;
+
+  isNixOS = osConfig != null;
 
   mkProgramPath = program: mkOption {
     description = "Path to the ${program} binary.";
@@ -107,6 +109,19 @@ in
   };
 
   config = {
+    # In case home-manager runs as a NixOS module we can
+    # provide sane defaults for the user space programs.
+    desktops.sway.programs = mkIf isNixOS (mkDefault {
+      swaymsg = "${osConfig.programs.sway.package}/bin/swaymsg";
+      wpctl = "${osConfig.services.pipewire.wireplumber.package}/bin/wpctl";
+      systemctl = "${osConfig.systemd.package}/bin/systemctl";
+      loginctl = "${osConfig.systemd.package}/bin/loginctl";
+
+      # If the base system is NixOS we can also use swaylock from nixpkgs
+      # because the PAM setup from the system should be compatible.
+      swaylock = lib.getExe pkgs.swaylock;
+    });
+
     home.packages = [
       cfg.fonts.monospace.package
       cfg.fonts.sanSerif.package
