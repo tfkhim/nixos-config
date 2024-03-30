@@ -121,5 +121,9 @@ in
     };
 
     services.kanshi.enable = true;
+
+    # Also refer to the base-desktop.nix file in the system
+    # configuration for the required gcr DBus service.
+    services.gpg-agent.pinentryPackage = pkgs.pinentry-gnome3;
   };
 }

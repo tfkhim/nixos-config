@@ -17,8 +17,6 @@
 
   services.gpg-agent = {
     enable = true;
-    # Also refer to the base-desktop.nix file in the system
-    # configuration for the required gcr DBus service.
-    pinentryPackage = pkgs.pinentry-gnome3;
+    pinentryPackage = lib.mkDefault pkgs.pinentry-tty;
   };
 }
