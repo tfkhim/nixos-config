@@ -7,7 +7,7 @@
 
 { config, osConfig ? null, pkgs, lib, ... }:
 let
-  inherit (lib) types mkOption mkIf mkDefault;
+  inherit (lib) types mkOption mkIf mkDefault getExe;
 
   cfg = config.desktops.sway;
 
@@ -52,6 +52,18 @@ in
   ];
 
   options.desktops.sway = {
+    startOnTTYLogin = mkOption {
+      description = ''
+        Start sway immediately after logging in at tty1.
+
+        Currently this only works if the users login shell is ZSH and the
+        ZSH configuration is also managed by home-manager. Furthermore,
+        desktops.sway.programs.sway mustn't be `null`.
+      '';
+      type = types.bool;
+      default = false;
+    };
+
     background = mkOption {
       description = "Background image used for sway and swaylock.";
       type = types.path;
@@ -67,6 +79,7 @@ in
     # Therefore this module requires that paths to such tools are passed
     # in through option values.
     programs = {
+      sway = mkProgramPath "sway";
       swaymsg = mkProgramPath "swaymsg";
       wpctl = mkProgramPath "wpctl";
       systemctl = mkProgramPath "systemctl";
@@ -112,6 +125,7 @@ in
     # In case home-manager runs as a NixOS module we can
     # provide sane defaults for the user space programs.
     desktops.sway.programs = mkIf isNixOS (mkDefault {
+      sway = getExe osConfig.programs.sway.package;
       swaymsg = "${osConfig.programs.sway.package}/bin/swaymsg";
       wpctl = "${osConfig.services.pipewire.wireplumber.package}/bin/wpctl";
       systemctl = "${osConfig.systemd.package}/bin/systemctl";
@@ -119,7 +133,7 @@ in
 
       # If the base system is NixOS we can also use swaylock from nixpkgs
       # because the PAM setup from the system should be compatible.
-      swaylock = lib.getExe pkgs.swaylock;
+      swaylock = getExe pkgs.swaylock;
     });
 
     home.packages = [
@@ -134,6 +148,16 @@ in
       enable = true;
       package = null;
     };
+
+    programs.zsh.loginExtra =
+      let
+        writeLoginScript = cfg.startOnTTYLogin && cfg.programs.sway != null;
+      in
+      mkIf writeLoginScript ''
+        if [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+          exec ${cfg.programs.sway}
+        fi
+      '';
 
     services.kanshi.enable = true;
 
