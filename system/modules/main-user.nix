@@ -25,6 +25,7 @@ in
       isNormalUser = true;
       home = "/home/${cfg.name}";
       shell = pkgs.zsh;
+      uid = 1000;
 
       extraGroups = with lib; [ ]
         ++ optional sudoEnabled "wheel"
