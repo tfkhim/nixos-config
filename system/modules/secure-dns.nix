@@ -92,8 +92,4 @@ in
     # fallbacks are as well set to the dnscrypt-proxy2 service.
     fallbackDns = [ dnsProxyAddress ];
   };
-
-  networking.networkmanager = {
-    enable = true;
-  };
 }

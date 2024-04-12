@@ -9,7 +9,7 @@
   imports = [
     ./modules/base.nix
     ./modules/sshd.nix
-    ./modules/networking.nix
+    ./modules/secure-dns.nix
     ./modules/main-user.nix
   ];
 }

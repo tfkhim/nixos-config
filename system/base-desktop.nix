@@ -14,6 +14,8 @@
     ./modules/virtualisation.nix
   ];
 
+  networking.networkmanager.enable = true;
+
   # This is needed by the pinentry gnome3 package. We enable it
   # in the desktop base file because it may be required by
   # different environments.
