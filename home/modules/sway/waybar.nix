@@ -101,10 +101,10 @@ in
       tooltip-format = "{ipaddr}/{cidr}";
     };
     cpu = {
-      format = "<b>{usage}%</b>${iconSeparator}";
+      format = "<b>{usage}%</b>${iconSeparator}";
     };
     memory = {
-      format = "<b>{}%</b>${iconSeparator}";
+      format = "<b>{}%</b>${iconSeparator}";
     };
     backlight = {
       format = "<b>{percent}%</b>${iconSeparator}{icon}";
@@ -114,13 +114,13 @@ in
     "battery#bat1" = makeBatteryConfig "BAT1";
     "clock#date" = {
       tooltip-format = "<big><b>{:%Y %B}</b>\n\n<tt>{calendar}</tt></big>";
-      format = "<b>{:%d.%m.%Y}</b>${iconSeparator}";
+      format = "<b>{:%d.%m.%Y}</b>${iconSeparator}<big></big>";
     };
     "clock#time" = {
-      format = "<b>{:%H:%M}</b>${iconSeparator}";
+      format = "<b>{:%H:%M}</b>${iconSeparator}<b></b>";
     };
     "custom/bar" = mkIf nwgBarEnabled {
-      format = "";
+      format = "<big></big>";
       tooltip = false;
       on-click = nwgBar;
     };
