@@ -10,6 +10,7 @@ let
   inherit (lib) types mkOption mkIf mkDefault getExe;
 
   cfg = config.desktops.sway;
+  kanshiCfg = config.services.kanshi;
 
   isNixOS = osConfig != null;
 
@@ -140,7 +141,12 @@ in
       cfg.fonts.monospace.package
       cfg.fonts.sanSerif.package
       cfg.fonts.symbols.package
-    ] ++ cfg.fonts.extraPackages;
+    ]
+    ++ cfg.fonts.extraPackages
+    # Add the kanshi package to be able to easily use
+    # kanshictl for reloading the configuration and
+    # switching to a different profile.
+    ++ lib.optional kanshiCfg.enable kanshiCfg.package;
 
     fonts.fontconfig.enable = true;
 
