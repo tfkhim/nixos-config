@@ -38,7 +38,6 @@
     enable = true;
 
     plugins = [
-      "fzf"
       "sudo"
 
       # gitfast also fixes a strange bug. When completing git log --show<TAB>
@@ -49,7 +48,8 @@
     ];
   };
 
-  home.packages = with pkgs; [
-    fzf
-  ];
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 }
