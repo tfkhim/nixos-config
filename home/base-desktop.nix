@@ -31,4 +31,8 @@
     # https://github.com/nix-community/nix-direnv/blob/master/direnvrc#L282
     nix-direnv.enable = true;
   };
+
+  home.packages = with pkgs;[
+    xdg-utils
+  ];
 }
