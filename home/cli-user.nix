@@ -5,6 +5,8 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
+{ pkgs, ... }:
+
 {
   imports = [
     ./modules/base.nix
@@ -15,4 +17,16 @@
     ./modules/git.nix
     ./modules/neovim.nix
   ];
+
+  home.packages = with pkgs; [
+    file
+    zip
+    unzip
+  ];
+
+  programs.bottom.enable = true;
+
+  programs.ripgrep.enable = true;
+
+  programs.bat.enable = true;
 }
