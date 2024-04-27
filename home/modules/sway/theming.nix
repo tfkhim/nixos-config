@@ -40,7 +40,7 @@ in
   qt = {
     enable = true;
     style.name = "gtk2";
-    platformTheme = "gtk";
+    platformTheme.name = "gtk";
   };
 
   home.pointerCursor = {
