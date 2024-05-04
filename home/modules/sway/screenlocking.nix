@@ -8,9 +8,9 @@
 { config, pkgs, lib, ... }:
 let
   inherit (lib) mkIf;
-  inherit (config.desktops.sway.programs) swaymsg;
+  inherit (config.desktops.programs) swaymsg;
 
-  swaylock = config.desktops.sway.programs.swaylock;
+  swaylock = config.desktops.programs.swaylock;
   swaylockEnabled = swaylock != null;
 
   pgrep = "${pkgs.procps}/bin/pgrep";
@@ -25,8 +25,8 @@ in
 
     settings = {
       daemonize = true;
-      image = config.desktops.sway.background;
-      font = config.desktops.sway.fonts.sanSerif.name;
+      image = config.desktops.background;
+      font = config.desktops.fonts.sanSerif.name;
     };
   };
 

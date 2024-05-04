@@ -11,8 +11,8 @@ let
 
   cfg = config.programs.nwg-bar;
 
-  systemctl = config.desktops.sway.programs.systemctl;
-  loginctl = config.desktops.sway.programs.loginctl;
+  systemctl = config.desktops.programs.systemctl;
+  loginctl = config.desktops.programs.loginctl;
 in
 {
   options.programs.nwg-bar = {
@@ -73,7 +73,7 @@ in
     assertions = [
       {
         assertion = systemctl != null && loginctl != null;
-        message = "The options 'desktops.sway.programs.systemctl' and 'desktops.sway.programs.loginctl' must be specified.";
+        message = "The options 'desktops.programs.systemctl' and 'desktops.programs.loginctl' must be specified.";
       }
     ];
 

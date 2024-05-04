@@ -28,4 +28,10 @@
   # for the udiskie service in the base-desktop.nix home manager
   # module.
   services.udisks2.enable = true;
+
+  # The following is required by the Home Manager xdg.portal
+  # option to ensure the portal files get linked.
+  # See:
+  #   https://github.com/nix-community/home-manager/blob/master/modules/misc/xdg-portal.nix#L26
+  environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
 }

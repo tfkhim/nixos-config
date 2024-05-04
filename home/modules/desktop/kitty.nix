@@ -12,7 +12,7 @@
     enable = true;
 
     font = {
-      name = config.desktops.sway.fonts.monospace.name;
+      name = config.desktops.fonts.monospace.name;
       size = 11;
     };
   };

@@ -7,7 +7,7 @@
 
 { config, pkgs, ... }:
 let
-  cfg = config.desktops.sway;
+  cfg = config.desktops;
 
   extraConfig3And4 = {
     gtk-application-prefer-dark-theme = true;

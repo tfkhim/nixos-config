@@ -21,7 +21,7 @@
 
   services.dunst.settings = {
     global = {
-      font = "${config.desktops.sway.fonts.sanSerif.name} 12";
+      font = "${config.desktops.fonts.sanSerif.name} 12";
 
       enable_recursive_icon_lookup = true;
       icon_theme = "Adwaita";

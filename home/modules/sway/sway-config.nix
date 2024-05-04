@@ -30,10 +30,10 @@ let
   nwgBar = "${config.programs.nwg-bar.package}/bin/nwg-bar";
   nwgBarEnabled = config.programs.nwg-bar.enable;
 
-  swaylock = config.desktops.sway.programs.swaylock;
+  swaylock = config.desktops.programs.swaylock;
   swaylockEnabled = swaylock != null;
 
-  wpctl = config.desktops.sway.programs.wpctl;
+  wpctl = config.desktops.programs.wpctl;
   wpctlEnabled = wpctl != null;
 
   cursorTheme = config.home.pointerCursor.name;
@@ -65,7 +65,7 @@ in
     terminal = mkIf kittyEnabled kitty;
 
     fonts = {
-      names = with config.desktops.sway.fonts; [
+      names = with config.desktops.fonts; [
         sanSerif.name
         symbols.name
       ];
@@ -220,7 +220,7 @@ in
 
     output = {
       "*" = {
-        bg = "${config.desktops.sway.background} fill";
+        bg = "${config.desktops.background} fill";
       };
     };
 

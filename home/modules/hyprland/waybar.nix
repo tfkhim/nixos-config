@@ -1,6 +1,6 @@
 # This file is part of https://github.com/tfkhim/nixos-config
 #
-# Copyright (c) 2023 Thomas Himmelstoss
+# Copyright (c) 2024 Thomas Himmelstoss
 #
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
@@ -47,8 +47,8 @@ in
   programs.waybar.settings = [{
     height = 30;
     spacing = 4;
-    modules-left = [ "sway/workspaces" "sway/mode" ];
-    modules-center = [ "sway/window" ];
+    modules-left = [ "hyprland/workspaces" "hyprland/submap" ];
+    modules-center = [ "hyprland/window" ];
     modules-right = [
       "tray"
       "pulseaudio"
@@ -63,14 +63,14 @@ in
       (mkIf nwgBarEnabled "custom/bar")
     ];
 
-    "sway/workspaces" = {
+    "hyprland/workspaces" = {
+      format = "<b>{id}</b>";
+    };
+    "hyprland/submap" = {
       format = "<b>{}</b>";
     };
-    "sway/mode" = {
-      format = "<b>{}</b>";
-    };
-    "sway/window" = {
-      format = "<b>{}</b>";
+    "hyprland/window" = {
+      format = "<b>{title}</b>";
     };
     tray = {
       spacing = 10;
