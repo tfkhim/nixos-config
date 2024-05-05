@@ -25,6 +25,7 @@ in
   imports = [
     ./base-desktop.nix
     ./modules/hyprland/hyprland-config.nix
+    ./modules/hyprland/screenlocking.nix
     ./modules/hyprland/waybar.nix
     ./modules/desktop/dunst.nix
     ./modules/desktop/kitty.nix

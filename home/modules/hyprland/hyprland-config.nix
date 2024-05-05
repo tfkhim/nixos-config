@@ -60,6 +60,7 @@ in
         "${modifier}, Return, exec, ${kitty}"
         "${modifier}, o, exec, ${wofi} --show=drun"
         "${modifier}_SHIFT, p, exec, ${screenshotOfRegion}"
+        "CTRL_ALT, l, exec, ${config.desktops.programs.loginctl} lock-session"
 
         # Move your focus around
         "${modifier}, ${left}, movefocus, l"
