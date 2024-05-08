@@ -160,18 +160,5 @@ in
     };
 
     misc.vrr = 1;
-
-    exec-once = "${getExe pkgs.hyprpaper}";
   };
-
-  xdg.configFile."hypr/hyprpaper.conf".text =
-    let
-      image = config.desktops.background;
-    in
-    ''
-      preload = ${image}
-      wallpaper = , ${image}
-      splash = false
-      ipc = off
-    '';
 }
