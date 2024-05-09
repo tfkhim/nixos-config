@@ -117,6 +117,10 @@ in
       ])
     ];
 
+    bindm = [
+      "${modifier},mouse:272,movewindow"
+    ];
+
     input = {
       kb_model = "pc101";
       kb_layout = "de";
@@ -134,6 +138,7 @@ in
       border_size = 1;
       "col.active_border" = "rgb(3584e4)";
       no_focus_fallback = true;
+      resize_on_border = true;
     };
 
     misc = {
