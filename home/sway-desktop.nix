@@ -20,10 +20,10 @@ in
     ./modules/sway/sway-config.nix
     ./modules/sway/waybar.nix
     ./modules/sway/screenlocking.nix
-    ./modules/desktop/dunst.nix
     ./modules/desktop/kitty.nix
     ./modules/desktop/mate-polkit-agent.nix
     ./modules/desktop/nwg-bar.nix
+    ./modules/desktop/swaync.nix
     ./modules/desktop/theming.nix
   ];
 
@@ -53,6 +53,8 @@ in
       enable = true;
       package = null;
     };
+
+    services.sway-notification-center.enable = true;
 
     programs.zsh.loginExtra =
       let

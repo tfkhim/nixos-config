@@ -16,6 +16,9 @@ let
 
   pavucontrol = lib.getExe pkgs.pavucontrol;
 
+  swayNCEnabled = config.services.sway-notification-center.enable;
+  swayNCClient = "${config.services.sway-notification-center.package}/bin/swaync-client";
+
   nwgBarEnabled = config.programs.nwg-bar.enable;
   nwgBar = "${config.programs.nwg-bar.package}/bin/nwg-bar";
 
@@ -60,6 +63,7 @@ in
       "battery#bat1"
       "clock#date"
       "clock#time"
+      (mkIf swayNCEnabled "custom/notifications")
       (mkIf nwgBarEnabled "custom/bar")
     ];
 
@@ -118,6 +122,25 @@ in
     };
     "clock#time" = {
       format = "<b>{:%H:%M}</b>${iconSeparator}<b></b>";
+    };
+    "custom/notifications" = mkIf swayNCEnabled {
+      tooltip = false;
+      format = "<big>{icon}</big>";
+      format-icons = {
+        notification = "<span foreground='red'>󰂚<sup></sup></span>";
+        none = "󰂚";
+        dnd-notification = "<span foreground='red'>󰂛<sup></sup></span>";
+        dnd-none = "󰂛";
+        inhibited-notification = "<span foreground='red'>󰂚<sup></sup></span>";
+        inhibited-none = "󰂚";
+        dnd-inhibited-notification = "<span foreground='red'>󰂛<sup></sup></span>";
+        dnd-inhibited-none = "󰂛";
+      };
+      return-type = "json";
+      exec = "${swayNCClient} -swb";
+      on-click = "${swayNCClient} -t -sw";
+      on-click-right = "${swayNCClient} -d -sw";
+      escape = true;
     };
     "custom/bar" = mkIf nwgBarEnabled {
       format = "<big></big>";

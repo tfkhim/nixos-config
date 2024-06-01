@@ -28,10 +28,10 @@ in
     ./modules/hyprland/screenlocking.nix
     ./modules/hyprland/wallpaper.nix
     ./modules/hyprland/waybar.nix
-    ./modules/desktop/dunst.nix
     ./modules/desktop/kitty.nix
     ./modules/desktop/mate-polkit-agent.nix
     ./modules/desktop/nwg-bar.nix
+    ./modules/desktop/swaync.nix
     ./modules/desktop/theming.nix
   ];
 
@@ -67,6 +67,7 @@ in
     ];
 
     wayland.windowManager.hyprland.enable = true;
+    services.sway-notification-center.enable = true;
 
     # Screensharing on Wayland is done by XDG Desktop Portal and Pipewire.
     # The programs.hyprland.enable = true setting already installs the
