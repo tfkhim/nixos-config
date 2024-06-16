@@ -15,6 +15,8 @@ let
   up = "k";
   down = "j";
 
+  keyboardFocusFollowsMouse = config.desktops.hyprland.keyboardFocusFollowsMouse;
+
   kitty = getExe config.programs.kitty.package;
   wofi = getExe pkgs.wofi;
   brightnessctl = getExe pkgs.brightnessctl;
@@ -124,7 +126,7 @@ in
     input = {
       kb_model = "pc101";
       kb_layout = "de";
-      follow_mouse = 2;
+      follow_mouse = if keyboardFocusFollowsMouse then 1 else 2;
 
       touchpad = {
         disable_while_typing = true;

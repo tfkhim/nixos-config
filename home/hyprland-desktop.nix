@@ -56,6 +56,17 @@ in
       type = types.bool;
       default = false;
     };
+
+    keyboardFocusFollowsMouse = mkOption {
+      description = ''
+        If true (default) the mouse movement will also change the keyboard focus.
+        If set to false only a mouse click will change the keyboard focus.
+
+        See: https://wiki.hyprland.org/Configuring/Variables/#follow-mouse-cursor
+      '';
+      type = types.bool;
+      default = true;
+    };
   };
 
   config = {
