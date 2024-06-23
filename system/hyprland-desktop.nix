@@ -12,7 +12,7 @@
 
   security.polkit.enable = true;
 
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   # Provides the org.freedesktop.RealtimeKit1 DBus service to
   # XDG Desktop Portal. Without this journalctl contains some
