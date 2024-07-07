@@ -23,7 +23,7 @@ in
       name = "Adwaita-dark";
       # gnome-themes-extra contains the Adwaita theme for
       # GTK 2 and 3 which is required by the Qt integration.
-      package = pkgs.gnome.gnome-themes-extra;
+      package = pkgs.gnome-themes-extra;
     };
 
     iconTheme = {
