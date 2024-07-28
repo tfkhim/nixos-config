@@ -15,7 +15,7 @@
     ./modules/ssh
     ./modules/gpg.nix
     ./modules/git.nix
-    ./modules/neovim.nix
+    ./modules/neovim
   ];
 
   home.packages = with pkgs; [
