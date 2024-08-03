@@ -12,9 +12,7 @@ let
     mkOption
     mkIf
     getExe
-    optional
-    concatStringsSep
-    elem;
+    optional;
 
   cfg = config.desktops.hyprland;
   finalHyprlandPackage = config.wayland.windowManager.hyprland.finalPackage;
@@ -78,12 +76,12 @@ in
   };
 
   config = {
-    # Add the kanshi package to be able to easily use
-    # kanshictl for reloading the configuration and
-    # switching to a different profile.
-    home.packages = mkIf kanshiCfg.enable [
-      kanshiCfg.package
-    ];
+    home.packages = with pkgs; [ ]
+      ++ [ wl-clipboard ]
+      # Add the kanshi package to be able to easily use
+      # kanshictl for reloading the configuration and
+      # switching to a different profile.
+      ++ optional kanshiCfg.enable kanshiCfg.package;
 
     wayland.windowManager.hyprland.enable = true;
     services.sway-notification-center.enable = true;

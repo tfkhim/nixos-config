@@ -7,7 +7,11 @@
 
 { config, pkgs, lib, ... }:
 let
-  inherit (lib) types mkOption mkIf;
+  inherit (lib)
+    types
+    mkOption
+    mkIf
+    optional;
 
   cfg = config.desktops.sway;
 
@@ -42,12 +46,12 @@ in
   };
 
   config = {
-    # Add the kanshi package to be able to easily use
-    # kanshictl for reloading the configuration and
-    # switching to a different profile.
-    home.packages = mkIf kanshiCfg.enable [
-      kanshiCfg.package
-    ];
+    home.packages = with pkgs; [ ]
+      ++ [ wl-clipboard ]
+      # Add the kanshi package to be able to easily use
+      # kanshictl for reloading the configuration and
+      # switching to a different profile.
+      ++ optional kanshiCfg.enable kanshiCfg.package;
 
     wayland.windowManager.sway = {
       enable = true;
