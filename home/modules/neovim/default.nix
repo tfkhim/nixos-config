@@ -26,6 +26,7 @@
 
     plugins = with pkgs.vimPlugins; [
       adwaita-nvim
+      vim-sleuth
       fidget-nvim
       nvim-treesitter.withAllGrammars
       telescope-nvim
