@@ -10,6 +10,11 @@ require("flash").setup({
         search = {
             enabled = true,
         },
+        char = {
+            highlight = {
+                backdrop = false,
+            },
+        },
     },
 
     search = {
