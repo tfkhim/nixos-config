@@ -32,6 +32,9 @@
       telescope-nvim
       telescope-fzf-native-nvim
       telescope-ui-select-nvim
+      # With the devicons installed Telescope shows file type
+      # icons in the result list.
+      nvim-web-devicons
       flash-nvim
       nvim-lspconfig
       typescript-tools-nvim
