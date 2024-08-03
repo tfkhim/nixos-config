@@ -209,6 +209,7 @@ in
       "type:keyboard" = {
         xkb_model = "pc101";
         xkb_layout = "de";
+        xkb_variant = "nodeadkeys";
       };
     };
 

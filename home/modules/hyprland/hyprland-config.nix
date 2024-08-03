@@ -126,6 +126,7 @@ in
     input = {
       kb_model = "pc101";
       kb_layout = "de";
+      kb_variant = "nodeadkeys";
       follow_mouse = if keyboardFocusFollowsMouse then 1 else 2;
 
       touchpad = {

@@ -95,7 +95,7 @@
               networking.hostName = "test";
               time.timeZone = "Europe/Berlin";
               i18n.defaultLocale = "de_DE.UTF-8";
-              console.keyMap = "de-latin1";
+              console.keyMap = "de-latin1-nodeadkeys";
 
               users.users.nixos.password = "nixos";
 
