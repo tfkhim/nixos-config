@@ -29,6 +29,15 @@ in
 {
   options = {
     keyboard.remapping = {
+      exclude = mkOption {
+        description = ''
+          A list of keyboards to which the remapping should not be applied.
+          This is useful to ignore keyboards that may already have a
+          programmable firmware like QMK.
+        '';
+        type = types.listOf types.str;
+        default = [ ];
+      };
       capslockMeta = mkOption {
         description = ''
           Many window manager key bindings use the meta modifier because
@@ -67,7 +76,7 @@ in
     services.keyd.enable = true;
 
     services.keyd.keyboards.default = {
-      ids = [ "*" ];
+      ids = [ "*" ] ++ (map (id: "-${id}") cfg.exclude);
 
       settings = {
         main = {
