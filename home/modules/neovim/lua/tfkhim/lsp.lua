@@ -5,9 +5,13 @@
 -- This software is subject to the MIT license. You should have
 -- received a copy of the license along with this program.
 
-require("lspconfig").rust_analyzer.setup({})
-require("lspconfig").nil_ls.setup({})
-require("typescript-tools").setup({})
+local client_capabilities = vim.lsp.protocol.make_client_capabilities()
+local cmp_lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = vim.tbl_deep_extend("force", client_capabilities, cmp_lsp_capabilities)
+
+require("lspconfig").rust_analyzer.setup({ capabilities = capabilities })
+require("lspconfig").nil_ls.setup({ capabilities = capabilities })
+require("typescript-tools").setup({ capabilities = capabilities })
 
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("tfkhim-lsp-attach", { clear = true }),

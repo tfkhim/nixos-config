@@ -21,24 +21,43 @@
       require("tfkhim.treesitter")
       require("tfkhim.flash")
       require("tfkhim.lsp")
+      require("tfkhim.completion")
       require("tfkhim.fidget")
     '';
 
-    plugins = with pkgs.vimPlugins; [
+    plugins = with pkgs.vimPlugins; let
+      telescopePlugins = [
+        telescope-nvim
+        telescope-fzf-native-nvim
+        telescope-ui-select-nvim
+      ];
+      lspPlugins = [
+        nvim-lspconfig
+
+        # This is a LUA implementation of a TypeScript LSP that uses
+        # tsserver instead of the typescript-language-server proxy
+        typescript-tools-nvim
+      ];
+      completionPlugins = [
+        nvim-cmp
+        luasnip
+        cmp_luasnip
+        cmp-nvim-lsp
+      ];
+    in
+    [
       adwaita-nvim
       vim-sleuth
       fidget-nvim
       nvim-treesitter.withAllGrammars
-      telescope-nvim
-      telescope-fzf-native-nvim
-      telescope-ui-select-nvim
-      # With the devicons installed Telescope shows file type
-      # icons in the result list.
+      # Used by different plugins to show icons. E.g. by Telescope to show
+      # file type icons in the result list.
       nvim-web-devicons
       flash-nvim
-      nvim-lspconfig
-      typescript-tools-nvim
-    ];
+    ]
+    ++ telescopePlugins
+    ++ lspPlugins
+    ++ completionPlugins;
   };
 
   xdg.configFile."nvim/lua".source = ./lua;
