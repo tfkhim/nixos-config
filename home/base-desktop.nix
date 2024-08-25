@@ -42,6 +42,7 @@ in
   imports = [
     ./cli-user.nix
     ./modules/virtualisation.nix
+    ./modules/podman-machine.nix
   ];
 
   options.desktops = {
