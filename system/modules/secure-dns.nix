@@ -56,7 +56,7 @@ in
           "https://quad9.net/dnscrypt/quad9-resolvers.md"
           "https://raw.githubusercontent.com/Quad9DNS/dnscrypt-settings/main/dnscrypt/quad9-resolvers.md"
         ];
-        minisign_key = "RWQBphd2+f6eiAqBsvDZEBXBGHQBJfeG6G+wJPPKxCZMoEQYpmoysKUN";
+        minisign_key = "RWTp2E4t64BrL651lEiDLNon+DqzPG4jhZ97pfdNkcq1VDdocLKvl5FW";
         cache_file = "/var/lib/${stateDirectory}/quad9-resolvers.md";
         refresh_delay = 72;
         prefix = "quad9-";
