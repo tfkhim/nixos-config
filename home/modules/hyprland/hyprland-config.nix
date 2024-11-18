@@ -160,11 +160,8 @@ in
     # See:
     #   https://wiki.hyprland.org/Configuring/Performance
     decoration = {
-      drop_shadow = false;
-
-      blur = {
-        enabled = false;
-      };
+      shadow.enabled = false;
+      blur.enabled = false;
     };
 
     misc.vrr = 1;
