@@ -37,6 +37,12 @@
         # This is a LUA implementation of a TypeScript LSP that uses
         # tsserver instead of the typescript-language-server proxy
         typescript-tools-nvim
+
+        # This is a Java language plugin with additional functionality
+        # which is not present in the nvim-lspconfig jdtls config.
+        # See:
+        #   https://github.com/mfussenegger/nvim-jdtls
+        nvim-jdtls
       ];
       completionPlugins = [
         nvim-cmp

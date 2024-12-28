@@ -13,6 +13,17 @@ require("lspconfig").rust_analyzer.setup({ capabilities = capabilities })
 require("lspconfig").nil_ls.setup({ capabilities = capabilities })
 require("typescript-tools").setup({ capabilities = capabilities })
 
+vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("tfkhim-java-lsp", { clear = true }),
+    pattern = "java",
+    callback = function(event)
+        require("jdtls").start_or_attach({
+            cmd = { "jdtls" },
+            capabilities = capabilities,
+        })
+    end,
+})
+
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("tfkhim-lsp-attach", { clear = true }),
     callback = function(event)
