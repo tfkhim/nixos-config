@@ -6,9 +6,12 @@
 -- received a copy of the license along with this program.
 
 require("flash").setup({
+    label = {
+        uppercase = false,
+    },
     modes = {
         search = {
-            enabled = true,
+            enabled = false,
         },
         char = {
             highlight = {
@@ -24,4 +27,8 @@ require("flash").setup({
 
 vim.keymap.set("n", "<Leader>jl", function()
     require("flash").jump()
+end)
+
+vim.keymap.set("n", "<Leader>vt", function()
+    require("flash").treesitter()
 end)
