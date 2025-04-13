@@ -23,6 +23,7 @@
       require("tfkhim.lsp")
       require("tfkhim.completion")
       require("tfkhim.fidget")
+      require("tfkhim.neotest")
     '';
 
     plugins = with pkgs.vimPlugins; let
@@ -50,6 +51,10 @@
         cmp_luasnip
         cmp-nvim-lsp
       ];
+      neotestPlugins = [
+        neotest
+        neotest-vitest
+      ];
     in
     [
       adwaita-nvim
@@ -63,7 +68,8 @@
     ]
     ++ telescopePlugins
     ++ lspPlugins
-    ++ completionPlugins;
+    ++ completionPlugins
+    ++ neotestPlugins;
   };
 
   xdg.configFile."nvim/lua".source = ./lua;
