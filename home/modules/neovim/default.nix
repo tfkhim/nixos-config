@@ -24,6 +24,7 @@
       require("tfkhim.completion")
       require("tfkhim.fidget")
       require("tfkhim.neotest")
+      require("tfkhim.nvim-tree")
     '';
 
     plugins = with pkgs.vimPlugins; let
@@ -65,6 +66,7 @@
       # file type icons in the result list.
       nvim-web-devicons
       flash-nvim
+      nvim-tree-lua
     ]
     ++ telescopePlugins
     ++ lspPlugins
