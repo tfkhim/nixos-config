@@ -56,7 +56,7 @@ in
       monospace = mkFontOption {
         fontType = "monospace";
         defaultName = "Hack Nerd Font";
-        defaultPackage = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
+        defaultPackage = pkgs.nerd-fonts.hack;
       };
 
       sanSerif = mkFontOption {
@@ -68,7 +68,7 @@ in
       symbols = mkFontOption {
         fontType = "symbols";
         defaultName = "Symbols Nerd Font";
-        defaultPackage = pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; };
+        defaultPackage = pkgs.nerd-fonts.symbols-only;
       };
 
       extraPackages = mkOption {

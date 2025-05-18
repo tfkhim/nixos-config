@@ -16,6 +16,7 @@ let
   down = "j";
 
   keyboardFocusFollowsMouse = config.desktops.hyprland.keyboardFocusFollowsMouse;
+  disableHardwareCursors = config.desktops.hyprland.disableHardwareCursors;
 
   kitty = getExe config.programs.kitty.package;
   wofi = getExe pkgs.wofi;
@@ -147,11 +148,16 @@ in
     misc = {
       disable_hyprland_logo = true;
       disable_splash_rendering = true;
+      vrr = 1;
     };
 
     animations = {
       enabled = false;
       first_launch_animation = false;
+    };
+
+    cursor = mkIf disableHardwareCursors {
+      no_hardware_cursors = 1;
     };
 
     # The next options are recommended to save on
@@ -163,7 +169,5 @@ in
       shadow.enabled = false;
       blur.enabled = false;
     };
-
-    misc.vrr = 1;
   };
 }

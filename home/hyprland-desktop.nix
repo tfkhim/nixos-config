@@ -117,7 +117,6 @@ in
 
     programs.zsh.loginExtra = mkIf cfg.startOnTTYLogin ''
       if [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
-        ${if cfg.disableHardwareCursors then "export WLR_NO_HARDWARE_CURSORS=1" else ""}
         exec ${getExe finalHyprlandPackage}
       fi
     '';
@@ -129,6 +128,6 @@ in
 
     # Also refer to the base-desktop.nix file in the system
     # configuration for the required gcr DBus service.
-    services.gpg-agent.pinentryPackage = pkgs.pinentry-gnome3;
+    services.gpg-agent.pinentry.package = pkgs.pinentry-gnome3;
   };
 }

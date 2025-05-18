@@ -74,6 +74,6 @@ in
 
     # Also refer to the base-desktop.nix file in the system
     # configuration for the required gcr DBus service.
-    services.gpg-agent.pinentryPackage = pkgs.pinentry-gnome3;
+    services.gpg-agent.pinentry.package = pkgs.pinentry-gnome3;
   };
 }

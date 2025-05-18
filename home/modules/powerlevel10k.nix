@@ -105,7 +105,7 @@ in
   programs.zsh = {
     # This ZSH plugin is only sourced for non-tty terminals. On a tty the
     # theme is most likely broken due to incompatible fonts. 
-    initExtra = ''
+    initContent = ''
       if [[ $TERM != "dumb" && ! "$(tty)" =~ "/dev/tty[1-9]" ]]; then
         source ${package}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
         source ${package}/share/zsh-powerlevel10k/config/p10k-classic.zsh
