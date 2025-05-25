@@ -71,6 +71,12 @@ in
         defaultPackage = pkgs.nerd-fonts.symbols-only;
       };
 
+      emoji = mkFontOption {
+        fontType = "Emoji";
+        defaultName = "Noto Color Emoji";
+        defaultPackage = pkgs.noto-fonts-color-emoji;
+      };
+
       extraPackages = mkOption {
         description = "Additional font packages to install.";
         type = with types; listOf package;
@@ -111,6 +117,7 @@ in
       monospace.package
       sanSerif.package
       symbols.package
+      emoji.package
     ])
     ++ cfg.fonts.extraPackages;
 
