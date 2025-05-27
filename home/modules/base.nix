@@ -5,7 +5,12 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # We also need to run the Nix garbage collector as the

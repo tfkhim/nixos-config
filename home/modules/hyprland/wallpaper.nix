@@ -5,20 +5,24 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   image = config.desktops.background;
 in
 {
-  xdg.configFile."hypr/hyprpaper.conf".text =
-    lib.hm.generators.toHyprconf {
-      attrs = {
-        preload = image;
-        wallpaper = ", ${image}";
-        splash = false;
-        ipc = "off";
-      };
+  xdg.configFile."hypr/hyprpaper.conf".text = lib.hm.generators.toHyprconf {
+    attrs = {
+      preload = image;
+      wallpaper = ", ${image}";
+      splash = false;
+      ipc = "off";
     };
+  };
 
   systemd.user.services.hyprpaper = {
     Unit = {
@@ -33,6 +37,8 @@ in
       ExecStart = lib.getExe pkgs.hyprpaper;
     };
 
-    Install = { WantedBy = [ "graphical-session.target" ]; };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
   };
 }

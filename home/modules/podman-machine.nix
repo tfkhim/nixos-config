@@ -5,7 +5,12 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   inherit (lib)
     types
@@ -13,7 +18,8 @@ let
     mkOption
     mkEnableOption
     mkPackageOption
-    mkIf;
+    mkIf
+    ;
 
   cfg = config.services.podman-machine;
 
@@ -96,9 +102,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages =
-      [ podmanPackage ]
-      ++ optional cfg.docker-wrapper.enable wrappedDocker;
+    home.packages = [ podmanPackage ] ++ optional cfg.docker-wrapper.enable wrappedDocker;
 
     systemd.user.services.init-podman-machine = {
       Unit = {
@@ -144,4 +148,3 @@ in
     };
   };
 }
-

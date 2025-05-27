@@ -18,7 +18,6 @@
       PartOf = [ "graphical-session.target" ];
     };
 
-
     Service = {
       Type = "simple";
       Restart = "always";

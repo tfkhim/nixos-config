@@ -27,51 +27,53 @@
       require("tfkhim.nvim-tree")
     '';
 
-    plugins = with pkgs.vimPlugins; let
-      telescopePlugins = [
-        telescope-nvim
-        telescope-fzf-native-nvim
-        telescope-ui-select-nvim
-      ];
-      lspPlugins = [
-        nvim-lspconfig
+    plugins =
+      with pkgs.vimPlugins;
+      let
+        telescopePlugins = [
+          telescope-nvim
+          telescope-fzf-native-nvim
+          telescope-ui-select-nvim
+        ];
+        lspPlugins = [
+          nvim-lspconfig
 
-        # This is a LUA implementation of a TypeScript LSP that uses
-        # tsserver instead of the typescript-language-server proxy
-        typescript-tools-nvim
+          # This is a LUA implementation of a TypeScript LSP that uses
+          # tsserver instead of the typescript-language-server proxy
+          typescript-tools-nvim
 
-        # This is a Java language plugin with additional functionality
-        # which is not present in the nvim-lspconfig jdtls config.
-        # See:
-        #   https://github.com/mfussenegger/nvim-jdtls
-        nvim-jdtls
-      ];
-      completionPlugins = [
-        nvim-cmp
-        luasnip
-        cmp_luasnip
-        cmp-nvim-lsp
-      ];
-      neotestPlugins = [
-        neotest
-        neotest-vitest
-      ];
-    in
-    [
-      adwaita-nvim
-      vim-sleuth
-      fidget-nvim
-      nvim-treesitter.withAllGrammars
-      # Used by different plugins to show icons. E.g. by Telescope to show
-      # file type icons in the result list.
-      nvim-web-devicons
-      flash-nvim
-      nvim-tree-lua
-    ]
-    ++ telescopePlugins
-    ++ lspPlugins
-    ++ completionPlugins
-    ++ neotestPlugins;
+          # This is a Java language plugin with additional functionality
+          # which is not present in the nvim-lspconfig jdtls config.
+          # See:
+          #   https://github.com/mfussenegger/nvim-jdtls
+          nvim-jdtls
+        ];
+        completionPlugins = [
+          nvim-cmp
+          luasnip
+          cmp_luasnip
+          cmp-nvim-lsp
+        ];
+        neotestPlugins = [
+          neotest
+          neotest-vitest
+        ];
+      in
+      [
+        adwaita-nvim
+        vim-sleuth
+        fidget-nvim
+        nvim-treesitter.withAllGrammars
+        # Used by different plugins to show icons. E.g. by Telescope to show
+        # file type icons in the result list.
+        nvim-web-devicons
+        flash-nvim
+        nvim-tree-lua
+      ]
+      ++ telescopePlugins
+      ++ lspPlugins
+      ++ completionPlugins
+      ++ neotestPlugins;
   };
 
   xdg.configFile."nvim/lua".source = ./lua;

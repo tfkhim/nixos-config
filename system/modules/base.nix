@@ -5,13 +5,22 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, pkgs, inputs, lib, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 
 {
   nixpkgs.config.allowUnfree = true;
 
   nix = {
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
 
     # Ensure the nix commands (e.g. nix run) use the same
     # nixpkgs version as this flake. This reduces the amount

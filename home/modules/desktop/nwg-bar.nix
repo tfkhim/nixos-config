@@ -5,9 +5,19 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
-  inherit (lib) types mkOption mkPackageOption mkIf;
+  inherit (lib)
+    types
+    mkOption
+    mkPackageOption
+    mkIf
+    ;
 
   cfg = config.programs.nwg-bar;
 
@@ -26,24 +36,35 @@ in
 
     actions =
       let
-        mkActionOption = { name, defaultEnable, defaultIcon }: {
-          enable = mkOption {
-            description = "Enable the ${name} action.";
-            type = types.bool;
-            default = defaultEnable;
-          };
-          icon = mkOption {
-            description = ''
-              The icon for the ${name} action. This can be:
-                * a path to a *.png or *.svg file
-                * a system icon name like 'system-log-out'
-              See https://github.com/nwg-piotr/nwg-bar#templates for reference.
-            '';
-            type = with types; oneOf [ str path ];
+        mkActionOption =
+          {
+            name,
+            defaultEnable,
+            defaultIcon,
+          }:
+          {
+            enable = mkOption {
+              description = "Enable the ${name} action.";
+              type = types.bool;
+              default = defaultEnable;
+            };
+            icon = mkOption {
+              description = ''
+                The icon for the ${name} action. This can be:
+                  * a path to a *.png or *.svg file
+                  * a system icon name like 'system-log-out'
+                See https://github.com/nwg-piotr/nwg-bar#templates for reference.
+              '';
+              type =
+                with types;
+                oneOf [
+                  str
+                  path
+                ];
 
-            default = "${cfg.package}/share/nwg-bar/images/${defaultIcon}.svg";
+              default = "${cfg.package}/share/nwg-bar/images/${defaultIcon}.svg";
+            };
           };
-        };
       in
       {
         logout = mkActionOption {
@@ -111,7 +132,8 @@ in
           icon = cfg.actions.shutdown.icon;
         };
       in
-      builtins.toJSON ([ ]
+      builtins.toJSON (
+        [ ]
         ++ (lib.optional enableLogout logout)
         ++ (lib.optional enableReboot reboot)
         ++ (lib.optional enableHibernate hibernate)

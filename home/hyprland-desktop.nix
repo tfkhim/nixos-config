@@ -5,14 +5,20 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   inherit (lib)
     types
     mkOption
     mkIf
     getExe
-    optional;
+    optional
+    ;
 
   cfg = config.desktops.hyprland;
   finalHyprlandPackage = config.wayland.windowManager.hyprland.finalPackage;
@@ -76,7 +82,9 @@ in
   };
 
   config = {
-    home.packages = with pkgs; [ ]
+    home.packages =
+      with pkgs;
+      [ ]
       ++ [ wl-clipboard ]
       # Add the kanshi package to be able to easily use
       # kanshictl for reloading the configuration and
@@ -109,7 +117,10 @@ in
 
         wlrPortalConfig = {
           enable = true;
-          config.hyprland.default = [ "wlr" "gtk" ];
+          config.hyprland.default = [
+            "wlr"
+            "gtk"
+          ];
           extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
         };
       in

@@ -5,9 +5,19 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
-  inherit (lib) types mkOption mkPackageOption mkIf;
+  inherit (lib)
+    types
+    mkOption
+    mkPackageOption
+    mkIf
+    ;
   cfg = config.virtualisation;
   dataDir = "${config.xdg.dataHome}/libvirt";
   nixOvmfDir = "${dataDir}/nix-ovmf";

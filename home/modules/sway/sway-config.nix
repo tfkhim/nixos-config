@@ -5,7 +5,13 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 let
   inherit (lib) mkIf mkMerge getExe;
 
@@ -60,7 +66,13 @@ let
 in
 {
   wayland.windowManager.sway.config = {
-    inherit modifier left right up down;
+    inherit
+      modifier
+      left
+      right
+      up
+      down
+      ;
 
     terminal = mkIf kittyEnabled kitty;
 

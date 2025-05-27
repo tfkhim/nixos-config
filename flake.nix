@@ -37,7 +37,15 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, nixos-generators, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      sops-nix,
+      nixos-generators,
+      ...
+    }@inputs:
     let
       provideFlakeInputsToSystemConfig = rootModule: {
         # The _modules.args option can't be used to add modules
@@ -85,7 +93,13 @@
         format = "vm";
         modules = [
           self.nixosModules.sway-desktop
-          ({ config, pkgs, lib, ... }:
+          (
+            {
+              config,
+              pkgs,
+              lib,
+              ...
+            }:
             let
               opensshEnabled = config.services.openssh.enable;
             in
@@ -116,15 +130,24 @@
               # The Arch Linux Wiki suggests using the qxl and bochs_drm kernel
               # modules:
               # https://wiki.archlinux.org/title/QEMU#qxl
-              boot.kernelModules = [ "qxl" "bochs_drm" ];
+              boot.kernelModules = [
+                "qxl"
+                "bochs_drm"
+              ];
 
               virtualisation.forwardPorts = [
-                (lib.mkIf opensshEnabled { from = "host"; proto = "tcp"; host.port = 2222; guest.port = 22; })
+                (lib.mkIf opensshEnabled {
+                  from = "host";
+                  proto = "tcp";
+                  host.port = 2222;
+                  guest.port = 22;
+                })
               ];
-            })
+            }
+          )
         ];
       };
 
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
     };
 }

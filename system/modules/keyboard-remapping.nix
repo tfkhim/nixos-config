@@ -23,8 +23,8 @@ let
   # of keyd doesn't satisfy the third requirement. The timeout action
   # of keyd doesn't satisfy the second requirement. But the following
   # combination of both actions gives the desired behavior.
-  mkMultiUseButton = tapAction: layer:
-    "timeout(overload(${layer}, ${tapAction}), 200, layer(${layer}))";
+  mkMultiUseButton =
+    tapAction: layer: "timeout(overload(${layer}, ${tapAction}), 200, layer(${layer}))";
 in
 {
   options = {

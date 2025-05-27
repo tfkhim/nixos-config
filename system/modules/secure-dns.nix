@@ -74,7 +74,6 @@ in
   # should be the dnscrypt-proxy2 resolver.
   networking.nameservers = [ dnsProxyAddress ];
 
-
   # systemd-resolved also supports caching of requests. But there is no need to
   # disable it explicitly because it is disabled if the DNS server is host
   # local like in this setup:

@@ -5,7 +5,12 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkPackageOption mkIf;
 
@@ -37,7 +42,9 @@ in
         ExecReload = "${cfg.package}/bin/swaync-client --reload-config";
       };
 
-      Install = { WantedBy = [ "graphical-session.target" ]; };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
     };
   };
 }

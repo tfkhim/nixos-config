@@ -33,5 +33,8 @@
   # option to ensure the portal files get linked.
   # See:
   #   https://github.com/nix-community/home-manager/blob/master/modules/misc/xdg-portal.nix#L26
-  environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
+  environment.pathsToLink = [
+    "/share/xdg-desktop-portal"
+    "/share/applications"
+  ];
 }

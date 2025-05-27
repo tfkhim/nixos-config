@@ -5,13 +5,19 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   inherit (lib)
     types
     mkOption
     mkIf
-    optional;
+    optional
+    ;
 
   cfg = config.desktops.sway;
 
@@ -46,7 +52,9 @@ in
   };
 
   config = {
-    home.packages = with pkgs; [ ]
+    home.packages =
+      with pkgs;
+      [ ]
       ++ [ wl-clipboard ]
       # Add the kanshi package to be able to easily use
       # kanshictl for reloading the configuration and

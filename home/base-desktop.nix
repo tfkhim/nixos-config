@@ -5,38 +5,58 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, osConfig ? null, pkgs, lib, ... }:
+{
+  config,
+  osConfig ? null,
+  pkgs,
+  lib,
+  ...
+}:
 let
-  inherit (lib) types mkOption mkIf mkDefault getExe;
+  inherit (lib)
+    types
+    mkOption
+    mkIf
+    mkDefault
+    getExe
+    ;
 
   cfg = config.desktops;
 
   isNixOS = osConfig != null;
 
-  mkFontOption = { fontType, defaultName, defaultPackage }: mkOption {
-    type = types.submodule {
-      options = {
-        name = mkOption {
-          description = "Name of the ${fontType} font to use.";
-          type = types.str;
-        };
-        package = mkOption {
-          description = "Package of the ${fontType} font to use.";
-          type = types.package;
+  mkFontOption =
+    {
+      fontType,
+      defaultName,
+      defaultPackage,
+    }:
+    mkOption {
+      type = types.submodule {
+        options = {
+          name = mkOption {
+            description = "Name of the ${fontType} font to use.";
+            type = types.str;
+          };
+          package = mkOption {
+            description = "Package of the ${fontType} font to use.";
+            type = types.package;
+          };
         };
       };
+      default = {
+        name = defaultName;
+        package = defaultPackage;
+      };
     };
-    default = {
-      name = defaultName;
-      package = defaultPackage;
-    };
-  };
 
-  mkProgramPath = program: mkOption {
-    description = "Path to the ${program} binary.";
-    type = with types; nullOr path;
-    default = null;
-  };
+  mkProgramPath =
+    program:
+    mkOption {
+      description = "Path to the ${program} binary.";
+      type = with types; nullOr path;
+      default = null;
+    };
 in
 {
   imports = [
@@ -110,16 +130,18 @@ in
   };
 
   config = {
-    home.packages = with pkgs;[
-      xdg-utils
-    ]
-    ++ (with cfg.fonts;[
-      monospace.package
-      sanSerif.package
-      symbols.package
-      emoji.package
-    ])
-    ++ cfg.fonts.extraPackages;
+    home.packages =
+      with pkgs;
+      [
+        xdg-utils
+      ]
+      ++ (with cfg.fonts; [
+        monospace.package
+        sanSerif.package
+        symbols.package
+        emoji.package
+      ])
+      ++ cfg.fonts.extraPackages;
 
     fonts.fontconfig.enable = true;
 
