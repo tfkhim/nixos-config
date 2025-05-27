@@ -11,7 +11,7 @@
   imports = [
     ./modules/base.nix
     ./modules/zsh.nix
-    ./modules/powerlevel10k.nix
+    ./modules/starship.nix
     ./modules/ssh
     ./modules/gpg.nix
     ./modules/git.nix

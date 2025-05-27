@@ -5,7 +5,7 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ config, pkgs, ... }:
+{ config, lib, ... }:
 
 {
   programs.zsh = {
@@ -13,6 +13,7 @@
     dotDir = ".config/zsh";
 
     enableCompletion = true;
+    syntaxHighlighting.enable = true;
 
     shellAliases = {
       "ls" = "ls --color=auto";
@@ -23,29 +24,44 @@
       # ---
 
       "gst" = "git status";
+      "gs" = "git show";
       "gl" = "git log";
       "gd" = "git diff";
       "gdc" = "git diff --cached";
-      "gau" = "git add --update && git status";
+      "gau" = "git add --update";
       "gc" = "git commit";
       "gca" = "git commit --amend";
       "gpp" = "git pull --prune";
       "gri" = "git rebase --interactive --autosquash";
     };
-  };
 
-  programs.zsh.oh-my-zsh = {
-    enable = true;
+    initContent =
+      let
+        completion = lib.mkOrder 550 ''
+          zstyle ':completion:*' completer _complete
+          zstyle ':completion:*' menu select
+          zstyle ':completion:*' accept-exact-dirs true
+          zstyle ':completion:*' special-dirs true
+          zstyle ':completion:*' matcher-list "" 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}'
+        '';
 
-    plugins = [
-      "sudo"
+        enableViMode = ''
+          bindkey -v
+        '';
 
-      # gitfast also fixes a strange bug. When completing git log --show<TAB>
-      # a hyphen is added. But the cursor is placed before the hyphen. This
-      # makes it hard to continue typing. The different completion from
-      # gitfast doesn't seem to have this problem.
-      "gitfast"
-    ];
+        historyPrefixCompletion = ''
+          autoload -Uz history-search-end
+          zle -N history-beginning-search-backward-end history-search-end
+          zle -N history-beginning-search-forward-end history-search-end
+          bindkey "$terminfo[kcuu1]" history-beginning-search-backward-end
+          bindkey "$terminfo[kcud1]" history-beginning-search-forward-end
+        '';
+      in
+      lib.mkMerge [
+        completion
+        enableViMode
+        historyPrefixCompletion
+      ];
   };
 
   programs.fzf = {
