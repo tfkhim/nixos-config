@@ -22,7 +22,12 @@
 
       right_format = lib.concatStrings [
         "$jobs"
-        "$all"
+        "$aws"
+        "$java"
+        "$nix_shell"
+        "$nodejs"
+        "$python"
+        "$rust"
       ];
 
       add_newline = false;
@@ -51,14 +56,10 @@
       };
 
       aws.format = " [\\[$symbol( $profile)( \\($region\\))( \\[$duration\\])\\]]($style)";
-      gradle.format = " [\\[$symbol$version\\]]($style)";
       java.format = " [\\[$symbol$version\\]]($style)";
-      kotlin.format = " [\\[$symbol$version\\]]($style)";
       nodejs.format = " [\\[$symbol$version\\]]($style)";
       python.format = " [\\[$symbol$pyenv_prefix$version( \\($virtualenv\\))\\]]($style)";
       rust.format = " [\\[$symbol($version)\\]]($style)";
-
-      package.disabled = true;
     };
   };
 
