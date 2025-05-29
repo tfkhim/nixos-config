@@ -45,10 +45,6 @@
           zstyle ':completion:*' matcher-list "" 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}'
         '';
 
-        enableViMode = ''
-          bindkey -v
-        '';
-
         historyPrefixCompletion = ''
           autoload -Uz history-search-end
           zle -N history-beginning-search-backward-end history-search-end
@@ -59,7 +55,6 @@
       in
       lib.mkMerge [
         completion
-        enableViMode
         historyPrefixCompletion
       ];
   };
