@@ -52,10 +52,17 @@
           bindkey "$terminfo[kcuu1]" history-beginning-search-backward-end
           bindkey "$terminfo[kcud1]" history-beginning-search-forward-end
         '';
+
+        awsProfileSelection = ''
+          function asp() {
+            export AWS_PROFILE=$1
+          }
+        '';
       in
       lib.mkMerge [
         completion
         historyPrefixCompletion
+        awsProfileSelection
       ];
   };
 
