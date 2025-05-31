@@ -14,9 +14,7 @@ require("flash").setup({
             enabled = false,
         },
         char = {
-            highlight = {
-                backdrop = false,
-            },
+            enabled = false,
         },
     },
 
