@@ -18,7 +18,7 @@
     enableZshIntegration = false;
 
     settings = {
-      format = "$status|( $cmd_duration|)( $username(@$hostname)|) $directory(| $git_branch$git_commit$git_state$git_metrics$git_status)$character";
+      format = "$status|( $cmd_duration|)( $username(@$hostname) |) $directory(| $git_branch$git_commit$git_state$git_metrics$git_status)$character";
 
       right_format = lib.concatStrings [
         "$jobs"
@@ -31,6 +31,9 @@
       ];
 
       add_newline = false;
+
+      username.format = "[$user]($style)";
+      hostname.format = "[$hostname]($style)";
 
       directory = {
         fish_style_pwd_dir_length = 2;
