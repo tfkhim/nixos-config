@@ -41,8 +41,16 @@
           zstyle ':completion:*' completer _complete
           zstyle ':completion:*' menu select
           zstyle ':completion:*' accept-exact-dirs true
-          zstyle ':completion:*' special-dirs true
           zstyle ':completion:*' matcher-list "" 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}'
+
+          # Complete the . and .. directories with a slash
+          zstyle ':completion:*' special-dirs true
+
+          zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
+
+          # Use caching so that long running commands are useable
+          zstyle ':completion:*' use-cache yes
+          zstyle ':completion:*' cache-path "${config.xdg.cacheHome}/zsh"
         '';
 
         keyBindings = ''
