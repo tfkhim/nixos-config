@@ -45,6 +45,10 @@
           zstyle ':completion:*' matcher-list "" 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}'
         '';
 
+        keyBindings = ''
+          bindkey -e
+        '';
+
         historyPrefixCompletion = ''
           autoload -U up-line-or-beginning-search
           zle -N up-line-or-beginning-search
@@ -63,6 +67,7 @@
       in
       lib.mkMerge [
         completion
+        keyBindings
         historyPrefixCompletion
         awsProfileSelection
       ];
