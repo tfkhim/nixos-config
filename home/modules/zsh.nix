@@ -15,6 +15,8 @@
     enableCompletion = true;
     syntaxHighlighting.enable = true;
 
+    history.path = "${config.xdg.dataHome}/zsh/zsh_history";
+
     shellAliases = {
       "ls" = "ls --color=auto";
       "ll" = "ls -l --color=auto";
