@@ -6,7 +6,9 @@
 # received a copy of the license along with this program.
 
 { config, lib, ... }:
-
+let
+  zshCacheDir = "${config.xdg.cacheHome}/zsh";
+in
 {
   programs.zsh = {
     enable = true;
@@ -37,8 +39,12 @@
       "gri" = "git rebase --interactive --autosquash";
     };
 
+    completionInit = ''autoload -U compinit && compinit -i -d "${zshCacheDir}/zcompdump"'';
+
     initContent =
       let
+        makeCacheDir = lib.mkOrder 500 ''mkdir -p "${zshCacheDir}"'';
+
         completion = lib.mkOrder 550 ''
           zstyle ':completion:*' completer _complete
           zstyle ':completion:*' menu select
@@ -87,6 +93,7 @@
         '';
       in
       lib.mkMerge [
+        makeCacheDir
         completion
         keyBindings
         historyPrefixCompletion
