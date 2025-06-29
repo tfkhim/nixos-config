@@ -86,6 +86,14 @@ in
           bindkey "$terminfo[kcud1]" down-line-or-beginning-search
         '';
 
+        settings = ''
+          # In the bash word style each part of a path is a word.
+          # This allows one to only delete one part of a path instead
+          # of the whole path.
+          autoload -Uz select-word-style
+          select-word-style bash
+        '';
+
         awsProfileSelection = ''
           function asp() {
             export AWS_PROFILE=$1
@@ -97,6 +105,7 @@ in
         completion
         keyBindings
         historyPrefixCompletion
+        settings
         awsProfileSelection
       ];
   };
