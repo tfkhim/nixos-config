@@ -20,8 +20,15 @@
     mutableTrust = lib.mkDefault false;
   };
 
-  services.gpg-agent = {
-    enable = true;
-    pinentry.package = lib.mkDefault pkgs.pinentry-tty;
-  };
+  services.gpg-agent =
+    let
+      twelveHoursInSeconds = 12 * 60 * 60;
+    in
+    {
+      enable = true;
+      pinentry.package = lib.mkDefault pkgs.pinentry-tty;
+
+      defaultCacheTtl = twelveHoursInSeconds;
+      maxCacheTtl = twelveHoursInSeconds;
+    };
 }
