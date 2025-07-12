@@ -70,6 +70,10 @@ in
           # Delete with delete key
           bindkey -M emacs "$terminfo[kdch1]" delete-char
 
+          # Navigate to beginning and end of line with home and end keys
+          bindkey -M emacs "$terminfo[khome]" beginning-of-line
+          bindkey -M emacs "$terminfo[kend]"  end-of-line
+
           # Edit the current command line in an editor
           autoload -U edit-command-line
           zle -N edit-command-line
