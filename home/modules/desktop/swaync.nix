@@ -25,7 +25,10 @@ in
 
   config = mkIf cfg.enable {
 
-    xdg.configFile."swaync/config.json".text = builtins.toJSON { };
+    xdg.configFile."swaync/config.json".text = builtins.toJSON {
+      hide-on-clear = true;
+      hide-on-action = true;
+    };
 
     xdg.configFile."swaync/style.css".source = ./swaync-style.css;
 
