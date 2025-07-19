@@ -11,6 +11,7 @@ local capabilities = vim.tbl_deep_extend("force", client_capabilities, cmp_lsp_c
 
 require("lspconfig").rust_analyzer.setup({ capabilities = capabilities })
 require("lspconfig").nil_ls.setup({ capabilities = capabilities })
+require("lspconfig").kotlin_language_server.setup({ capabilities = capabilities })
 require("typescript-tools").setup({ capabilities = capabilities })
 
 vim.api.nvim_create_autocmd("FileType", {
