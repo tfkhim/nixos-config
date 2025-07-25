@@ -21,6 +21,7 @@ require("telescope").setup({
         lsp_type_definitions = { initial_mode = "normal" },
         grep_string = { initial_mode = "normal" },
         buffers = { initial_mode = "normal" },
+        marks = { initial_mode = "normal" },
     },
     extensions = {
         ["ui-select"] = {
@@ -40,6 +41,9 @@ local builtin = require("telescope.builtin")
 map("<leader>sh", builtin.help_tags, "[S]earch [H]elp")
 map("<leader>sk", builtin.keymaps, "[S]earch [K]eymaps")
 map("<leader>sf", builtin.find_files, "[S]earch [F]iles")
+map("<leader>sm", function()
+    builtin.marks({ mark_type = "global" })
+end, "[S]earch [M]arks")
 map("<leader>ss", builtin.builtin, "[S]earch [S]elect Telescope")
 map("<leader>sw", builtin.grep_string, "[S]earch current [W]ord")
 map("<leader>sg", builtin.live_grep, "[S]earch by [G]rep")
