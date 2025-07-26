@@ -148,6 +148,31 @@
         ];
       };
 
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
+      formatter.x86_64-linux =
+        let
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        in
+        pkgs.treefmt.withConfig {
+          runtimeInputs = with pkgs; [
+            nixfmt-rfc-style
+            stylua
+          ];
+
+          settings.formatter = {
+            nixfmt = {
+              command = "nixfmt";
+              includes = [ "*.nix" ];
+            };
+
+            stylua = {
+              command = "stylua";
+              options = [
+                "--indent-type"
+                "Spaces"
+              ];
+              includes = [ "*.lua" ];
+            };
+          };
+        };
     };
 }
