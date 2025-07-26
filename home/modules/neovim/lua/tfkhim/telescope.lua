@@ -5,6 +5,9 @@
 -- This software is subject to the MIT license. You should have
 -- received a copy of the license along with this program.
 
+local builtin = require("telescope.builtin")
+local actions = require("telescope.actions")
+
 require("telescope").setup({
     defaults = {
         sorting_strategy = "ascending",
@@ -20,7 +23,14 @@ require("telescope").setup({
         lsp_implementations = { initial_mode = "normal" },
         lsp_type_definitions = { initial_mode = "normal" },
         grep_string = { initial_mode = "normal" },
-        buffers = { initial_mode = "normal" },
+        buffers = {
+            initial_mode = "normal",
+            mappings = {
+                n = {
+                    ["dd"] = actions.delete_buffer,
+                },
+            },
+        },
         marks = { initial_mode = "normal" },
     },
     extensions = {
@@ -37,7 +47,6 @@ local map = function(keys, func, desc)
     vim.keymap.set("n", keys, func, { desc = desc })
 end
 
-local builtin = require("telescope.builtin")
 map("<leader>sh", builtin.help_tags, "[S]earch [H]elp")
 map("<leader>sk", builtin.keymaps, "[S]earch [K]eymaps")
 map("<leader>sf", builtin.find_files, "[S]earch [F]iles")
