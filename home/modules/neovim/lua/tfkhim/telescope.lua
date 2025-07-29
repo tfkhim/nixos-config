@@ -33,6 +33,7 @@ require("telescope").setup({
         grep_string = { initial_mode = "normal" },
         buffers = {
             initial_mode = "normal",
+            sort_mru = true,
             mappings = {
                 n = {
                     ["dd"] = actions.delete_buffer,
