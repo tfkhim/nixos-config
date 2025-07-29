@@ -16,6 +16,14 @@ require("telescope").setup({
                 prompt_position = "top",
             },
         },
+        path_display = {
+            filename_first = true,
+            shorten = {
+                len = 2,
+                exclude = { -4, -3, -2, -1 },
+            },
+            truncate = true,
+        },
     },
     pickers = {
         lsp_definitions = { initial_mode = "normal" },
