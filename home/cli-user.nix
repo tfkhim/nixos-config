@@ -22,6 +22,7 @@
     file
     zip
     unzip
+    fd
   ];
 
   programs.bottom.enable = true;

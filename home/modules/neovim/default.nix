@@ -80,6 +80,7 @@
   xdg.configFile."nvim/lua".source = ./lua;
 
   home.packages = with pkgs; [
+    fd # recommended by the Telescope plugin
     nil
     rust-analyzer
   ];
