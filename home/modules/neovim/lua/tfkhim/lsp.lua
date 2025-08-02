@@ -5,9 +5,12 @@
 -- This software is subject to the MIT license. You should have
 -- received a copy of the license along with this program.
 
+require("lsp-file-operations").setup()
+
 local client_capabilities = vim.lsp.protocol.make_client_capabilities()
 local cmp_lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
-local capabilities = vim.tbl_deep_extend("force", client_capabilities, cmp_lsp_capabilities)
+local lsp_file_capabilities = require("lsp-file-operations").default_capabilities()
+local capabilities = vim.tbl_deep_extend("force", client_capabilities, cmp_lsp_capabilities, lsp_file_capabilities)
 
 require("lspconfig").rust_analyzer.setup({ capabilities = capabilities })
 require("lspconfig").nil_ls.setup({ capabilities = capabilities })

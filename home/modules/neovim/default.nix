@@ -37,6 +37,7 @@
         ];
         lspPlugins = [
           nvim-lspconfig
+          nvim-lsp-file-operations
 
           # This is a LUA implementation of a TypeScript LSP that uses
           # tsserver instead of the typescript-language-server proxy
