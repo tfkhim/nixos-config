@@ -12,9 +12,9 @@ local cmp_lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 local lsp_file_capabilities = require("lsp-file-operations").default_capabilities()
 local capabilities = vim.tbl_deep_extend("force", client_capabilities, cmp_lsp_capabilities, lsp_file_capabilities)
 
-require("lspconfig").rust_analyzer.setup({ capabilities = capabilities })
-require("lspconfig").nil_ls.setup({ capabilities = capabilities })
-require("lspconfig").kotlin_language_server.setup({ capabilities = capabilities })
+vim.lsp.config("*", { capabilities = capabilities })
+vim.lsp.enable({ "rust_analyzer", "nil_ls", "kotlin_language_server" })
+
 require("typescript-tools").setup({ capabilities = capabilities })
 
 vim.api.nvim_create_autocmd("FileType", {

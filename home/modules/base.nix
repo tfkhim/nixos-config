@@ -19,8 +19,7 @@
   # by the system level garbage collector.
   nix.gc = {
     automatic = true;
-    # Sadly daily is not a supported value right now.
-    frequency = "weekly";
+    dates = "daily";
     options = "--delete-older-than 10d";
   };
 

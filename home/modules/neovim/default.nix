@@ -36,7 +36,6 @@
           telescope-ui-select-nvim
         ];
         lspPlugins = [
-          nvim-lspconfig
           nvim-lsp-file-operations
 
           # This is a LUA implementation of a TypeScript LSP that uses

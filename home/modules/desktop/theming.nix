@@ -28,7 +28,7 @@ in
 
     iconTheme = {
       name = "breeze-dark";
-      package = pkgs.libsForQt5.breeze-icons;
+      package = pkgs.kdePackages.breeze-icons;
     };
 
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
@@ -45,7 +45,7 @@ in
 
   home.pointerCursor = {
     name = "breeze_cursors";
-    package = pkgs.libsForQt5.breeze-qt5;
+    package = pkgs.kdePackages.breeze;
     size = 24;
 
     gtk.enable = true;
@@ -54,7 +54,7 @@ in
 
   programs.nwg-bar.actions =
     let
-      actionIcons = "${pkgs.libsForQt5.breeze-icons}/share/icons/breeze-dark/actions/32";
+      actionIcons = "${pkgs.kdePackages.breeze-icons}/share/icons/breeze-dark/actions/32";
     in
     {
       logout.icon = "${actionIcons}/system-log-out.svg";

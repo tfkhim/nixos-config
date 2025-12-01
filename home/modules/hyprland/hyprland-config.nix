@@ -158,7 +158,6 @@ in
 
     animations = {
       enabled = false;
-      first_launch_animation = false;
     };
 
     cursor = mkIf disableHardwareCursors {

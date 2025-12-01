@@ -30,7 +30,8 @@ let
   brightnessctl = getExe pkgs.brightnessctl;
   playerctl = getExe pkgs.playerctl;
 
-  workspaceExtrasPkg = inputs.sway-workspace-extras.packages.${pkgs.system}.default;
+  workspaceExtrasPkg =
+    inputs.sway-workspace-extras.packages.${pkgs.stdenv.hostPlatform.system}.default;
   sway-workspace-extras = getExe workspaceExtrasPkg;
 
   nwgBar = "${config.programs.nwg-bar.package}/bin/nwg-bar";
