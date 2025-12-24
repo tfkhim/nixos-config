@@ -14,7 +14,7 @@
 let
   inherit (lib) getExe;
 
-  hyprlock = getExe pkgs.hyprlock;
+  hyprlock = getExe config.programs.hyprlock.package;
   hyprlockRunning = "${pkgs.procps}/bin/pidof hyprlock";
   hyprctl = "${config.wayland.windowManager.hyprland.finalPackage}/bin/hyprctl";
   lockSession = "${config.desktops.programs.loginctl} lock-session";
@@ -27,7 +27,7 @@ in
 
     settings = {
       general = {
-        lock_cmd = "${hyprlockRunning} || ${hyprlock}";
+        lock_cmd = "${hyprlockRunning} || ${hyprlock} --grace 2";
         before_sleep_cmd = lockSession;
       };
 
@@ -50,12 +50,12 @@ in
     };
   };
 
-  xdg.configFile."hypr/hyprlock.conf".text = lib.hm.generators.toHyprconf {
-    attrs = {
+  programs.hyprlock = {
+    enable = true;
+
+    settings = {
       general = {
-        no_fade_out = true;
         ignore_empty_input = true;
-        grace = 2;
       };
 
       background = {
@@ -76,6 +76,13 @@ in
         outer_color = "rgb(50A2AF)";
         inner_color = "rgb(2A6D95)";
         font_color = "rgb(FFFFFF)";
+      };
+
+      animations = {
+        animation = [
+          "fadeOut,0,0,default"
+          "inputFieldColors,0,0,default"
+        ];
       };
     };
   };
