@@ -173,11 +173,5 @@ in
       shadow.enabled = false;
       blur.enabled = false;
     };
-
-    windowrule = [
-      # Fixes for drag and drop of windows of Jetbrains IDEs
-      "float, class:^(jetbrains-.*),title:^(win.*)"
-      "noinitialfocus, opacity 0.9 0.9, class:^(jetbrains-.*)"
-    ];
   };
 }
