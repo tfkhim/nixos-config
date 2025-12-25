@@ -13,11 +13,12 @@
 }:
 let
   inherit (lib) getExe;
+  inherit (config.custom.tfkhim.desktops.programs) loginctl;
 
   hyprlock = getExe config.programs.hyprlock.package;
   hyprlockRunning = "${pkgs.procps}/bin/pidof hyprlock";
   hyprctl = "${config.wayland.windowManager.hyprland.finalPackage}/bin/hyprctl";
-  lockSession = "${config.desktops.programs.loginctl} lock-session";
+  lockSession = "${loginctl} lock-session";
   turnOffOutputs = "${hyprctl} dispatch dpms off";
   turnOnOutputs = "${hyprctl} dispatch dpms on";
 in
@@ -60,7 +61,7 @@ in
 
       background = {
         monitor = "";
-        path = config.desktops.background;
+        path = config.custom.tfkhim.desktops.background;
       };
 
       input-field = {

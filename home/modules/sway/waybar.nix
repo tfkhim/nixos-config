@@ -21,8 +21,8 @@ let
 
   pavucontrol = lib.getExe pkgs.pavucontrol;
 
-  nwgBarEnabled = config.programs.nwg-bar.enable;
-  nwgBar = "${config.programs.nwg-bar.package}/bin/nwg-bar";
+  nwgBarEnabled = config.custom.tfkhim.programs.nwg-bar.enable;
+  nwgBar = "${config.custom.tfkhim.programs.nwg-bar.package}/bin/nwg-bar";
 
   makeBatteryConfig = bat: {
     inherit bat;
@@ -47,7 +47,7 @@ in
     systemd.enable = true;
 
     style =
-      with config.desktops.fonts;
+      with config.custom.tfkhim.desktops.fonts;
       ''
         * {
           font-family: "${sanSerif.name}", "${symbols.name}";

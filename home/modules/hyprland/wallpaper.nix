@@ -12,7 +12,7 @@
   ...
 }:
 let
-  image = config.desktops.background;
+  image = config.custom.tfkhim.desktops.background;
 in
 {
   xdg.configFile."hypr/hyprpaper.conf".text = lib.hm.generators.toHyprconf {

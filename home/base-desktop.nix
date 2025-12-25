@@ -21,7 +21,7 @@ let
     getExe
     ;
 
-  cfg = config.desktops;
+  cfg = config.custom.tfkhim.desktops;
 
   isNixOS = osConfig != null;
 
@@ -65,7 +65,7 @@ in
     ./modules/podman-machine.nix
   ];
 
-  options.desktops = {
+  options.custom.tfkhim.desktops = {
     background = mkOption {
       description = "Image used as the desktop background.";
       type = types.path;
@@ -147,7 +147,7 @@ in
 
     # In case home-manager runs as a NixOS module we can
     # provide sane defaults for the user space programs.
-    desktops.programs = mkIf isNixOS (mkDefault {
+    custom.tfkhim.desktops.programs = mkIf isNixOS (mkDefault {
       sway = getExe osConfig.programs.sway.package;
       swaymsg = "${osConfig.programs.sway.package}/bin/swaymsg";
       wpctl = "${osConfig.services.pipewire.wireplumber.package}/bin/wpctl";

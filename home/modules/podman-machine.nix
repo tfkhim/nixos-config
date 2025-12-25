@@ -21,7 +21,7 @@ let
     mkIf
     ;
 
-  cfg = config.services.podman-machine;
+  cfg = config.custom.tfkhim.services.podman-machine;
 
   podmanPackage = cfg.package;
   podmanExe = lib.getExe podmanPackage;
@@ -57,7 +57,7 @@ let
     };
 in
 {
-  options.services.podman-machine = {
+  options.custom.tfkhim.services.podman-machine = {
     enable = mkEnableOption "podman-machine";
 
     package = mkPackageOption pkgs "podman" { };

@@ -18,12 +18,12 @@ let
     mkPackageOption
     mkIf
     ;
-  cfg = config.virtualisation;
+  cfg = config.custom.tfkhim.virtualisation;
   dataDir = "${config.xdg.dataHome}/libvirt";
   nixOvmfDir = "${dataDir}/nix-ovmf";
 in
 {
-  options.virtualisation = {
+  options.custom.tfkhim.virtualisation = {
     enable = mkOption {
       description = "Enable and configure virtualisation using libvirt user session";
       type = types.bool;
@@ -35,7 +35,7 @@ in
     swtpm.package = mkPackageOption pkgs "swtpm" { };
   };
 
-  config = mkIf config.virtualisation.enable {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [
       libvirt
       cfg.ovmf.package

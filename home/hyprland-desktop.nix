@@ -20,7 +20,7 @@ let
     optional
     ;
 
-  cfg = config.desktops.hyprland;
+  cfg = config.custom.tfkhim.desktops.hyprland;
   finalHyprlandPackage = config.wayland.windowManager.hyprland.finalPackage;
 
   kanshiCfg = config.services.kanshi;
@@ -39,7 +39,7 @@ in
     ./modules/desktop/theming.nix
   ];
 
-  options.desktops.hyprland = {
+  options.custom.tfkhim.desktops.hyprland = {
     startOnTTYLogin = mkOption {
       description = ''
         Start Hyprland immediately after logging in at tty1.
@@ -92,7 +92,7 @@ in
       ++ optional kanshiCfg.enable kanshiCfg.package;
 
     wayland.windowManager.hyprland.enable = true;
-    services.sway-notification-center.enable = true;
+    custom.tfkhim.services.sway-notification-center.enable = true;
 
     # Screensharing on Wayland is done by XDG Desktop Portal and Pipewire.
     # This setup is similar to what is done by the system modules when setting

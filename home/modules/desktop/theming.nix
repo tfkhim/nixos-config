@@ -7,7 +7,7 @@
 
 { config, pkgs, ... }:
 let
-  cfg = config.desktops;
+  cfg = config.custom.tfkhim.desktops;
 
   extraConfig3And4 = {
     gtk-application-prefer-dark-theme = true;
@@ -52,7 +52,7 @@ in
     x11.enable = true;
   };
 
-  programs.nwg-bar.actions =
+  custom.tfkhim.programs.nwg-bar.actions =
     let
       actionIcons = "${pkgs.kdePackages.breeze-icons}/share/icons/breeze-dark/actions/32";
     in

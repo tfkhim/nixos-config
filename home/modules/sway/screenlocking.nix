@@ -13,9 +13,8 @@
 }:
 let
   inherit (lib) mkIf;
-  inherit (config.desktops.programs) swaymsg;
+  inherit (config.custom.tfkhim.desktops.programs) swaymsg swaylock;
 
-  swaylock = config.desktops.programs.swaylock;
   swaylockEnabled = swaylock != null;
 
   pgrep = "${pkgs.procps}/bin/pgrep";
@@ -30,8 +29,8 @@ in
 
     settings = {
       daemonize = true;
-      image = config.desktops.background;
-      font = config.desktops.fonts.sanSerif.name;
+      image = config.custom.tfkhim.desktops.background;
+      font = config.custom.tfkhim.desktops.fonts.sanSerif.name;
     };
   };
 

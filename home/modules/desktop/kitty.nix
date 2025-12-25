@@ -12,7 +12,7 @@
     enable = true;
 
     font = {
-      name = config.desktops.fonts.monospace.name;
+      name = config.custom.tfkhim.desktops.fonts.monospace.name;
       size = 11;
     };
   };

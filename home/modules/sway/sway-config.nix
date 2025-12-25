@@ -34,13 +34,13 @@ let
     inputs.sway-workspace-extras.packages.${pkgs.stdenv.hostPlatform.system}.default;
   sway-workspace-extras = getExe workspaceExtrasPkg;
 
-  nwgBar = "${config.programs.nwg-bar.package}/bin/nwg-bar";
-  nwgBarEnabled = config.programs.nwg-bar.enable;
+  nwgBar = "${config.custom.tfkhim.programs.nwg-bar.package}/bin/nwg-bar";
+  nwgBarEnabled = config.custom.tfkhim.programs.nwg-bar.enable;
 
-  swaylock = config.desktops.programs.swaylock;
+  swaylock = config.custom.tfkhim.desktops.programs.swaylock;
   swaylockEnabled = swaylock != null;
 
-  wpctl = config.desktops.programs.wpctl;
+  wpctl = config.custom.tfkhim.desktops.programs.wpctl;
   wpctlEnabled = wpctl != null;
 
   cursorTheme = config.home.pointerCursor.name;
@@ -78,7 +78,7 @@ in
     terminal = mkIf kittyEnabled kitty;
 
     fonts = {
-      names = with config.desktops.fonts; [
+      names = with config.custom.tfkhim.desktops.fonts; [
         sanSerif.name
         symbols.name
       ];
@@ -234,7 +234,7 @@ in
 
     output = {
       "*" = {
-        bg = "${config.desktops.background} fill";
+        bg = "${config.custom.tfkhim.desktops.background} fill";
       };
     };
 

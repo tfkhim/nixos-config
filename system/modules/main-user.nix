@@ -6,20 +6,19 @@
 # received a copy of the license along with this program.
 
 {
-  options,
   config,
   pkgs,
   lib,
   ...
 }:
 let
-  mainUserName = config.users.mainUser;
+  mainUserName = config.custom.tfkhim.mainUser;
   cfg = config.users.users.${mainUserName};
   sudoEnabled = config.security.sudo.enable;
   networkmanagerEnabled = config.networking.networkmanager.enable;
 in
 {
-  options.users.mainUser =
+  options.custom.tfkhim.mainUser =
     with lib;
     mkOption {
       type = types.str;

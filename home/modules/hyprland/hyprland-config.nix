@@ -20,18 +20,18 @@ let
   up = "k";
   down = "j";
 
-  keyboardFocusFollowsMouse = config.desktops.hyprland.keyboardFocusFollowsMouse;
-  disableHardwareCursors = config.desktops.hyprland.disableHardwareCursors;
+  keyboardFocusFollowsMouse = config.custom.tfkhim.desktops.hyprland.keyboardFocusFollowsMouse;
+  disableHardwareCursors = config.custom.tfkhim.desktops.hyprland.disableHardwareCursors;
 
   kitty = getExe config.programs.kitty.package;
   wofi = getExe pkgs.wofi;
   brightnessctl = getExe pkgs.brightnessctl;
   playerctl = getExe pkgs.playerctl;
 
-  nwgBar = "${config.programs.nwg-bar.package}/bin/nwg-bar";
-  nwgBarEnabled = config.programs.nwg-bar.enable;
+  nwgBar = "${config.custom.tfkhim.programs.nwg-bar.package}/bin/nwg-bar";
+  nwgBarEnabled = config.custom.tfkhim.programs.nwg-bar.enable;
 
-  wpctl = config.desktops.programs.wpctl;
+  wpctl = config.custom.tfkhim.desktops.programs.wpctl;
   wpctlEnabled = wpctl != null;
 
   screenshotOfRegion = getExe (
@@ -68,7 +68,7 @@ in
         "${modifier}, Return, exec, ${kitty}"
         "${modifier}, o, exec, ${wofi} --show=drun"
         "${modifier}_SHIFT, p, exec, ${screenshotOfRegion}"
-        "CTRL_ALT, l, exec, ${config.desktops.programs.loginctl} lock-session"
+        "CTRL_ALT, l, exec, ${config.custom.tfkhim.desktops.programs.loginctl} lock-session"
 
         # Move your focus around
         "${modifier}, ${left}, movefocus, l"

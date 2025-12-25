@@ -19,13 +19,12 @@ let
     mkIf
     ;
 
-  cfg = config.programs.nwg-bar;
+  inherit (config.custom.tfkhim.desktops.programs) systemctl loginctl;
 
-  systemctl = config.desktops.programs.systemctl;
-  loginctl = config.desktops.programs.loginctl;
+  cfg = config.custom.tfkhim.programs.nwg-bar;
 in
 {
-  options.programs.nwg-bar = {
+  options.custom.tfkhim.programs.nwg-bar = {
     enable = mkOption {
       description = "Enable nwg-bar";
       type = types.bool;

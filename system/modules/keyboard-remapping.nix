@@ -9,7 +9,7 @@
 let
   inherit (lib) mkOption types mkIf;
 
-  cfg = config.keyboard.remapping;
+  cfg = config.custom.tfkhim.keyboard.remapping;
   enableRemapping = with cfg; capslockMeta || emulate102nd;
 
   # A multi use button should behave as follows:
@@ -27,48 +27,46 @@ let
     tapAction: layer: "timeout(overload(${layer}, ${tapAction}), 200, layer(${layer}))";
 in
 {
-  options = {
-    keyboard.remapping = {
-      exclude = mkOption {
-        description = ''
-          A list of keyboards to which the remapping should not be applied.
-          This is useful to ignore keyboards that may already have a
-          programmable firmware like QMK.
-        '';
-        type = types.listOf types.str;
-        default = [ ];
-      };
-      capslockMeta = mkOption {
-        description = ''
-          Many window manager key bindings use the meta modifier because
-          this modifier isn't used much by applications. This avoids
-          potential collisions between application and window manager key
-          bindings. On ANSI and ISO keyboards the meta button is not that
-          easy to reach. With that in mind it makes sense to remap the
-          capslock button to the meta modifier. In addition to that this
-          option makes the capslock button behave like escape if it is
-          only tapped. Escape is another important button that is hard to
-          reach on common physical keyboard layouts.
-        '';
-        type = types.bool;
-        default = false;
-      };
+  options.custom.tfkhim.keyboard.remapping = {
+    exclude = mkOption {
+      description = ''
+        A list of keyboards to which the remapping should not be applied.
+        This is useful to ignore keyboards that may already have a
+        programmable firmware like QMK.
+      '';
+      type = types.listOf types.str;
+      default = [ ];
+    };
+    capslockMeta = mkOption {
+      description = ''
+        Many window manager key bindings use the meta modifier because
+        this modifier isn't used much by applications. This avoids
+        potential collisions between application and window manager key
+        bindings. On ANSI and ISO keyboards the meta button is not that
+        easy to reach. With that in mind it makes sense to remap the
+        capslock button to the meta modifier. In addition to that this
+        option makes the capslock button behave like escape if it is
+        only tapped. Escape is another important button that is hard to
+        reach on common physical keyboard layouts.
+      '';
+      type = types.bool;
+      default = false;
+    };
 
-      emulate102nd = mkOption {
-        description = ''
-          The ANSI physical layout doesn't provide the 102nd (e.g. < > |)
-          button which can be found on ISO physical layouts. This makes it
-          hard to use a key map which requires this button (e.g. de) on
-          ANSI physical layouts. Therefore this option emulates this button
-          by overloading the left shift key:
-           * A tap of the left shift button will result in a
-             102nd button tap
-           * Holding the left shift button still behaves like
-             holding down the shift modifier
-        '';
-        type = types.bool;
-        default = false;
-      };
+    emulate102nd = mkOption {
+      description = ''
+        The ANSI physical layout doesn't provide the 102nd (e.g. < > |)
+        button which can be found on ISO physical layouts. This makes it
+        hard to use a key map which requires this button (e.g. de) on
+        ANSI physical layouts. Therefore this option emulates this button
+        by overloading the left shift key:
+         * A tap of the left shift button will result in a
+           102nd button tap
+         * Holding the left shift button still behaves like
+           holding down the shift modifier
+      '';
+      type = types.bool;
+      default = false;
     };
   };
 

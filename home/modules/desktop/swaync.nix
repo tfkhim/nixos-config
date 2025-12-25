@@ -14,10 +14,10 @@
 let
   inherit (lib) mkEnableOption mkPackageOption mkIf;
 
-  cfg = config.services.sway-notification-center;
+  cfg = config.custom.tfkhim.services.sway-notification-center;
 in
 {
-  options.services.sway-notification-center = {
+  options.custom.tfkhim.services.sway-notification-center = {
     enable = mkEnableOption "sway-notification-center";
 
     package = mkPackageOption pkgs "swaynotificationcenter" { };

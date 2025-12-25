@@ -19,7 +19,7 @@ let
     optional
     ;
 
-  cfg = config.desktops.sway;
+  cfg = config.custom.tfkhim.desktops.sway;
 
   swayCmd = config.desktops.programs.sway;
   kanshiCfg = config.services.kanshi;
@@ -37,7 +37,7 @@ in
     ./modules/desktop/theming.nix
   ];
 
-  options.desktops.sway = {
+  options.custom.tfkhim.desktops.sway = {
     startOnTTYLogin = mkOption {
       description = ''
         Start sway immediately after logging in at tty1.
@@ -66,7 +66,7 @@ in
       package = null;
     };
 
-    services.sway-notification-center.enable = true;
+    custom.tfkhim.services.sway-notification-center.enable = true;
 
     programs.zsh.loginExtra =
       let
