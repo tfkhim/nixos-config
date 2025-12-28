@@ -12,7 +12,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkMerge getExe;
+  inherit (lib)
+    mkIf
+    mkMerge
+    types
+    mkOption
+    getExe
+    ;
 
   modifier = "SUPER";
   left = "h";
@@ -54,124 +60,149 @@ let
   );
 in
 {
-  wayland.windowManager.hyprland.settings = {
-    "$mod" = modifier;
+  options.custom.tfkhim.desktops.hyprland = {
+    disableHardwareCursors = mkOption {
+      description = ''
+        Disable hardware cursors which might not work on Nvidia GPUs.
 
-    bind = mkMerge [
-      [
-        "${modifier}_SHIFT, q, killactive"
+        See: https://wiki.hyprland.org/Nvidia/
+      '';
+      type = types.bool;
+      default = false;
+    };
 
-        #
-        # Program shortcuts
-        #
+    keyboardFocusFollowsMouse = mkOption {
+      description = ''
+        If true (default) the mouse movement will also change the keyboard focus.
+        If set to false only a mouse click will change the keyboard focus.
 
-        "${modifier}, Return, exec, ${kitty}"
-        "${modifier}, o, exec, ${wofi} --show=drun"
-        "${modifier}_SHIFT, p, exec, ${screenshotOfRegion}"
-        "CTRL_ALT, l, exec, ${config.custom.tfkhim.desktops.programs.loginctl} lock-session"
+        See: https://wiki.hyprland.org/Configuring/Variables/#follow-mouse-cursor
+      '';
+      type = types.bool;
+      default = true;
+    };
+  };
 
-        # Move your focus around
-        "${modifier}, ${left}, movefocus, l"
-        "${modifier}, ${right}, movefocus, r"
-        "${modifier}, ${down}, movefocus, d"
-        "${modifier}, ${up}, movefocus, u"
+  config = {
+    wayland.windowManager.hyprland.settings = {
+      "$mod" = modifier;
 
-        # Move focus to workspace
-        "${modifier}, n, workspace, r-1"
-        "${modifier}, m, workspace, r+1"
+      bind = mkMerge [
+        [
+          "${modifier}_SHIFT, q, killactive"
 
-        # Move the focused window
-        "${modifier}_SHIFT, ${left}, movewindow, l"
-        "${modifier}_SHIFT, ${right}, movewindow, r"
-        "${modifier}_SHIFT, ${down}, movewindow, d"
-        "${modifier}_SHIFT, ${up}, movewindow, u"
+          #
+          # Program shortcuts
+          #
 
-        # Move focused container to workspace
-        "${modifier}_SHIFT, n, movetoworkspace, r-1"
-        "${modifier}_SHIFT, m, movetoworkspace, r+1"
+          "${modifier}, Return, exec, ${kitty}"
+          "${modifier}, o, exec, ${wofi} --show=drun"
+          "${modifier}_SHIFT, p, exec, ${screenshotOfRegion}"
+          "CTRL_ALT, l, exec, ${config.custom.tfkhim.desktops.programs.loginctl} lock-session"
 
-        # Layout
-        "${modifier}_SHIFT, o, fullscreen, 0"
-        "${modifier}_SHIFT, u, togglefloating"
+          # Move your focus around
+          "${modifier}, ${left}, movefocus, l"
+          "${modifier}, ${right}, movefocus, r"
+          "${modifier}, ${down}, movefocus, d"
+          "${modifier}, ${up}, movefocus, u"
 
-        # Special workspace
-        "${modifier}_SHIFT, i, movetoworkspace, special"
-        "${modifier}, i, togglespecialworkspace"
+          # Move focus to workspace
+          "${modifier}, n, workspace, r-1"
+          "${modifier}, m, workspace, r+1"
 
-        #
-        # Backlight
-        #
+          # Move the focused window
+          "${modifier}_SHIFT, ${left}, movewindow, l"
+          "${modifier}_SHIFT, ${right}, movewindow, r"
+          "${modifier}_SHIFT, ${down}, movewindow, d"
+          "${modifier}_SHIFT, ${up}, movewindow, u"
 
-        ", XF86MonBrightnessDown, exec, ${brightnessctl} set 5%-"
-        ", XF86MonBrightnessUp, exec, ${brightnessctl} set 5%+"
+          # Move focused container to workspace
+          "${modifier}_SHIFT, n, movetoworkspace, r-1"
+          "${modifier}_SHIFT, m, movetoworkspace, r+1"
 
-        #
-        # Multimedia
-        #
+          # Layout
+          "${modifier}_SHIFT, o, fullscreen, 0"
+          "${modifier}_SHIFT, u, togglefloating"
 
-        ", XF86AudioPlay, exec, ${playerctl} play-pause"
-        ", XF86AudioNext, exec, ${playerctl} next"
-        ", XF86AudioPrev, exec, ${playerctl} previous"
-      ]
-      (mkIf nwgBarEnabled [
-        "CTRL_ALT, Delete, exec, ${nwgBar}"
-      ])
-      (mkIf wpctlEnabled [
-        ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-        ", XF86AudioLowerVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-        ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        ", XF86AudioMicMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-        "CTRL, less, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-      ])
-    ];
+          # Special workspace
+          "${modifier}_SHIFT, i, movetoworkspace, special"
+          "${modifier}, i, togglespecialworkspace"
 
-    bindm = [
-      "${modifier},mouse:272,movewindow"
-    ];
+          #
+          # Backlight
+          #
 
-    input = {
-      kb_model = "pc101";
-      kb_layout = "de";
-      kb_variant = "nodeadkeys";
-      follow_mouse = if keyboardFocusFollowsMouse then 1 else 2;
+          ", XF86MonBrightnessDown, exec, ${brightnessctl} set 5%-"
+          ", XF86MonBrightnessUp, exec, ${brightnessctl} set 5%+"
 
-      touchpad = {
-        disable_while_typing = true;
-        tap-to-click = true;
+          #
+          # Multimedia
+          #
+
+          ", XF86AudioPlay, exec, ${playerctl} play-pause"
+          ", XF86AudioNext, exec, ${playerctl} next"
+          ", XF86AudioPrev, exec, ${playerctl} previous"
+        ]
+        (mkIf nwgBarEnabled [
+          "CTRL_ALT, Delete, exec, ${nwgBar}"
+        ])
+        (mkIf wpctlEnabled [
+          ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+          ", XF86AudioLowerVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+          ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          ", XF86AudioMicMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+          "CTRL, less, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+        ])
+      ];
+
+      bindm = [
+        "${modifier},mouse:272,movewindow"
+      ];
+
+      input = {
+        kb_model = "pc101";
+        kb_layout = "de";
+        kb_variant = "nodeadkeys";
+        follow_mouse = if keyboardFocusFollowsMouse then 1 else 2;
+
+        touchpad = {
+          disable_while_typing = true;
+          tap-to-click = true;
+        };
       };
-    };
 
-    general = {
-      gaps_out = 0;
-      gaps_in = 2;
-      border_size = 1;
-      "col.active_border" = "rgb(3584e4)";
-      no_focus_fallback = true;
-      resize_on_border = true;
-    };
+      general = {
+        gaps_out = 0;
+        gaps_in = 2;
+        border_size = 1;
+        "col.active_border" = "rgb(3584e4)";
+        no_focus_fallback = true;
+        resize_on_border = true;
+      };
 
-    misc = {
-      disable_hyprland_logo = true;
-      disable_splash_rendering = true;
-      vrr = 1;
-    };
+      misc = {
+        disable_hyprland_logo = true;
+        disable_splash_rendering = true;
+        vrr = 1;
+      };
 
-    animations = {
-      enabled = false;
-    };
+      animations = {
+        enabled = false;
+      };
 
-    cursor = mkIf disableHardwareCursors {
-      no_hardware_cursors = 1;
-    };
+      cursor = mkIf disableHardwareCursors {
+        no_hardware_cursors = 1;
+      };
 
-    # The next options are recommended to save on
-    # battery by disabling resource hungry effects
-    # and reduce the amount of sent frames.
-    # See:
-    #   https://wiki.hyprland.org/Configuring/Performance
-    decoration = {
-      shadow.enabled = false;
-      blur.enabled = false;
+      # The next options are recommended to save on
+      # battery by disabling resource hungry effects
+      # and reduce the amount of sent frames.
+      # See:
+      #   https://wiki.hyprland.org/Configuring/Performance
+      decoration = {
+        shadow.enabled = false;
+        blur.enabled = false;
+      };
     };
   };
 }

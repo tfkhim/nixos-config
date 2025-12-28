@@ -16,6 +16,7 @@
     Unit = {
       Description = "MATE polkit agent";
       PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
     };
 
     Service = {

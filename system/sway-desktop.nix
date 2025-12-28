@@ -10,6 +10,15 @@
     ./base-desktop.nix
   ];
 
+  # The following is required by the Home Manager xdg.portal
+  # option to ensure the portal files get linked.
+  # See:
+  #   https://github.com/nix-community/home-manager/blob/master/modules/misc/xdg-portal.nix#L26
+  environment.pathsToLink = [
+    "/share/xdg-desktop-portal"
+    "/share/applications"
+  ];
+
   programs.sway = {
     enable = true;
     # This module assumes that other required tools (e.g.

@@ -28,7 +28,7 @@ in
     Unit = {
       Description = "Wallpaper daemon for Hyprland";
       PartOf = [ "graphical-session.target" ];
-      After = [ "graphical-session-pre.target" ];
+      After = [ "graphical-session.target" ];
     };
 
     Service = {
