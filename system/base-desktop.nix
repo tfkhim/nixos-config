@@ -5,7 +5,7 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -28,4 +28,19 @@
   # for the udiskie service in the base-desktop.nix home manager
   # module.
   services.udisks2.enable = true;
+
+  # This is a requirement for flatpak. It is normally enabled by
+  # desktop eenvironments, anyway.
+  xdg.portal.enable = true;
+
+  services.flatpak.enable = true;
+  systemd.services.ensure-flathub-repo = {
+    serviceConfig.Type = "oneshot";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "multi-user.target" ];
+    path = [ config.services.flatpak.package ];
+    script = ''
+      flatpak remote-add --if-not-exists flathub ${./flathub.flatpakrepo}
+    '';
+  };
 }
