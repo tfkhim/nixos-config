@@ -13,7 +13,7 @@ let
   # issues one should copy the terminfo file to the remote
   # host:
   # https://wiki.archlinux.org/title/OpenSSH#%22Terminal_unknown%22_or_%22Error_opening_terminal%22_error_message
-  copyTerminfo = pkgs.stdenv.mkDerivation rec {
+  copyTerminfo = pkgs.stdenv.mkDerivation {
     name = "copy-terminfo";
 
     buildInputs = [ pkgs.python3 ];
