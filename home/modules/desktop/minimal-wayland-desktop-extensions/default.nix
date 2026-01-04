@@ -11,5 +11,6 @@
     ./mate-polkit-agent.nix
     ./nwg-bar.nix
     ./swaync.nix
+    ./waybar.nix
   ];
 }

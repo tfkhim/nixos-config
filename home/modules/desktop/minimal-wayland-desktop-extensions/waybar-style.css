@@ -19,6 +19,17 @@ tooltip {
     padding: 0 5px;
 }
 
+/* Class used by Hyprland workspaces module */
+#workspaces button.active {
+    background: #3584e4;
+}
+
+/* Class used by Hyprland workspaces module */
+#workspaces button.urgent {
+    background: #ed333b;
+}
+
+/* Class used by Sway workspaces module */
 #workspaces button.focused {
     background: #3584e4;
 }

@@ -9,6 +9,5 @@
   imports = [
     ./screenlocking.nix
     ./sway-config.nix
-    ./waybar.nix
   ];
 }

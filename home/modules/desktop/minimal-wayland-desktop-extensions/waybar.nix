@@ -1,6 +1,6 @@
 # This file is part of https://github.com/tfkhim/nixos-config
 #
-# Copyright (c) 2023 Thomas Himmelstoss
+# Copyright (c) 2024 Thomas Himmelstoss
 #
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
@@ -20,6 +20,9 @@ let
   segmentSeparator = " ";
 
   pavucontrol = lib.getExe pkgs.pavucontrol;
+
+  swayNCEnabled = config.custom.tfkhim.services.sway-notification-center.enable;
+  swayNCClient = "${config.custom.tfkhim.services.sway-notification-center.package}/bin/swaync-client";
 
   nwgBarEnabled = config.custom.tfkhim.programs.nwg-bar.enable;
   nwgBar = "${config.custom.tfkhim.programs.nwg-bar.package}/bin/nwg-bar";
@@ -61,10 +64,15 @@ in
       height = 30;
       spacing = 4;
       modules-left = [
+        "hyprland/workspaces"
         "sway/workspaces"
+        "hyprland/submap"
         "sway/mode"
       ];
-      modules-center = [ "sway/window" ];
+      modules-center = [
+        "hyprland/window"
+        "sway/window"
+      ];
       modules-right = [
         "tray"
         "pulseaudio"
@@ -76,8 +84,19 @@ in
         "battery#bat1"
         "clock#date"
         "clock#time"
+        (mkIf swayNCEnabled "custom/notifications")
         (mkIf nwgBarEnabled "custom/bar")
       ];
+
+      "hyprland/workspaces" = {
+        format = "<b>{id}</b>";
+      };
+      "hyprland/submap" = {
+        format = "<b>{}</b>";
+      };
+      "hyprland/window" = {
+        format = "<b>{title}</b>";
+      };
 
       "sway/workspaces" = {
         format = "<b>{}</b>";
@@ -88,6 +107,7 @@ in
       "sway/window" = {
         format = "<b>{}</b>";
       };
+
       tray = {
         spacing = 10;
       };
@@ -142,6 +162,25 @@ in
       };
       "clock#time" = {
         format = "<b>{:%H:%M}</b>${iconSeparator}<b></b>";
+      };
+      "custom/notifications" = mkIf swayNCEnabled {
+        tooltip = false;
+        format = "<big>{icon}</big>";
+        format-icons = {
+          notification = "<span foreground='red'>󰂚<sup></sup></span>";
+          none = "󰂚";
+          dnd-notification = "<span foreground='red'>󰂛<sup></sup></span>";
+          dnd-none = "󰂛";
+          inhibited-notification = "<span foreground='red'>󰂚<sup></sup></span>";
+          inhibited-none = "󰂚";
+          dnd-inhibited-notification = "<span foreground='red'>󰂛<sup></sup></span>";
+          dnd-inhibited-none = "󰂛";
+        };
+        return-type = "json";
+        exec = "${swayNCClient} -swb";
+        on-click = "${swayNCClient} -t -sw";
+        on-click-right = "${swayNCClient} -d -sw";
+        escape = true;
       };
       "custom/bar" = mkIf nwgBarEnabled {
         format = "<big></big>";

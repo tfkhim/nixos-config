@@ -10,6 +10,5 @@
     ./hyprland-config.nix
     ./screenlocking.nix
     ./wallpaper.nix
-    ./waybar.nix
   ];
 }
