@@ -9,25 +9,15 @@
 
 {
   imports = [
-    ./direnv.nix
-    ./git.nix
-    ./gpg.nix
-    ./neovim
-    ./ssh
-    ./starship.nix
-    ./zsh.nix
+    ./background.nix
+    ./fonts.nix
+    ./kitty.nix
+    ./services.nix
+    ./system-programs.nix
+    ./theming.nix
   ];
 
   home.packages = with pkgs; [
-    file
-    zip
-    unzip
-    fd
+    xdg-utils
   ];
-
-  programs.bottom.enable = true;
-
-  programs.ripgrep.enable = true;
-
-  programs.bat.enable = true;
 }

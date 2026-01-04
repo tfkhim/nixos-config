@@ -25,16 +25,11 @@ let
 in
 {
   imports = [
-    ./base-desktop.nix
-    ./modules/hyprland/hyprland-config.nix
-    ./modules/hyprland/screenlocking.nix
-    ./modules/hyprland/wallpaper.nix
-    ./modules/hyprland/waybar.nix
-    ./modules/desktop/kitty.nix
-    ./modules/desktop/mate-polkit-agent.nix
-    ./modules/desktop/nwg-bar.nix
-    ./modules/desktop/swaync.nix
-    ./modules/desktop/theming.nix
+    ./cli-user.nix
+    ./modules/desktop/base
+    ./modules/desktop/hyprland
+    ./modules/desktop/minimal-wayland-desktop-extensions
+    ./modules/misc
   ];
 
   options.custom.tfkhim.desktops.hyprland = {

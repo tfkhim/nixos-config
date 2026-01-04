@@ -26,15 +26,11 @@ let
 in
 {
   imports = [
-    ./base-desktop.nix
-    ./modules/sway/sway-config.nix
-    ./modules/sway/waybar.nix
-    ./modules/sway/screenlocking.nix
-    ./modules/desktop/kitty.nix
-    ./modules/desktop/mate-polkit-agent.nix
-    ./modules/desktop/nwg-bar.nix
-    ./modules/desktop/swaync.nix
-    ./modules/desktop/theming.nix
+    ./cli-user.nix
+    ./modules/desktop/base
+    ./modules/desktop/sway
+    ./modules/desktop/minimal-wayland-desktop-extensions
+    ./modules/misc
   ];
 
   options.custom.tfkhim.desktops.sway = {
