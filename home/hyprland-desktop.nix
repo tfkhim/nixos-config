@@ -12,16 +12,9 @@
   ...
 }:
 let
-  inherit (lib)
-    types
-    mkOption
-    mkIf
-    optional
-    ;
+  inherit (lib) types mkOption mkIf;
 
   cfg = config.custom.tfkhim.desktops.hyprland;
-
-  kanshiCfg = config.services.kanshi;
 in
 {
   imports = [
@@ -46,14 +39,7 @@ in
   };
 
   config = {
-    home.packages =
-      with pkgs;
-      [ ]
-      ++ [ wl-clipboard ]
-      # Add the kanshi package to be able to easily use
-      # kanshictl for reloading the configuration and
-      # switching to a different profile.
-      ++ optional kanshiCfg.enable kanshiCfg.package;
+    home.packages = with pkgs; [ wl-clipboard ];
 
     wayland.windowManager.hyprland.enable = true;
 
@@ -70,11 +56,6 @@ in
         exec uwsm start -- hyprland-uwsm.desktop
       fi
     '';
-
-    services.kanshi = {
-      enable = true;
-      systemdTarget = "graphical-session.target";
-    };
 
     # Also refer to the base-desktop.nix file in the system
     # configuration for the required gcr DBus service.
