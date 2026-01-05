@@ -39,8 +39,6 @@ in
   };
 
   config = {
-    home.packages = with pkgs; [ wl-clipboard ];
-
     wayland.windowManager.hyprland.enable = true;
 
     # The Systemd handling is already done by UWSM. Therefore,

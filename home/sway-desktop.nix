@@ -42,8 +42,6 @@ in
   };
 
   config = {
-    home.packages = with pkgs; [ wl-clipboard ];
-
     wayland.windowManager.sway = {
       enable = true;
       package = null;
