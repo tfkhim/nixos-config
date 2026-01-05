@@ -13,6 +13,7 @@
 }:
 let
   image = config.custom.tfkhim.desktops.background;
+  systemdTarget = config.custom.tfkhim.desktops.hyprland.systemdTarget;
 in
 {
   xdg.configFile."hypr/hyprpaper.conf".text = lib.hm.generators.toHyprconf {
@@ -27,8 +28,8 @@ in
   systemd.user.services.hyprpaper = {
     Unit = {
       Description = "Wallpaper daemon for Hyprland";
-      PartOf = [ "graphical-session.target" ];
-      After = [ "graphical-session.target" ];
+      PartOf = [ systemdTarget ];
+      After = [ systemdTarget ];
     };
 
     Service = {
@@ -38,7 +39,7 @@ in
     };
 
     Install = {
-      WantedBy = [ "graphical-session.target" ];
+      WantedBy = [ systemdTarget ];
     };
   };
 }

@@ -25,6 +25,7 @@ in
 {
   services.hypridle = {
     enable = true;
+    systemdTarget = config.custom.tfkhim.desktops.hyprland.systemdTarget;
 
     settings = {
       general = {
