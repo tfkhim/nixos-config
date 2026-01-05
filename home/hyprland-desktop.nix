@@ -5,12 +5,7 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 let
   inherit (lib) types mkOption mkIf;
 
@@ -54,9 +49,5 @@ in
         exec uwsm start -- hyprland-uwsm.desktop
       fi
     '';
-
-    # Also refer to the base-desktop.nix file in the system
-    # configuration for the required gcr DBus service.
-    services.gpg-agent.pinentry.package = pkgs.pinentry-gnome3;
   };
 }
