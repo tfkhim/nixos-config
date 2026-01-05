@@ -75,15 +75,13 @@
       nixosModules = {
         default = self.nixosModules.single-user;
         single-user = provideFlakeInputsToSystemConfig ./system/single-user.nix;
-        sway-desktop = provideFlakeInputsToSystemConfig ./system/sway-desktop.nix;
-        hyprland-desktop = provideFlakeInputsToSystemConfig ./system/hyprland-desktop.nix;
+        desktop = provideFlakeInputsToSystemConfig ./system/desktop.nix;
       };
 
       homeManagerModules = {
         default = self.homeManagerModules.cli-user;
         cli-user = provideFlakeInputsToHomeManager ./home/cli-user.nix;
-        sway-desktop = provideFlakeInputsToHomeManager ./home/sway-desktop.nix;
-        hyprland-desktop = provideFlakeInputsToHomeManager ./home/hyprland-desktop.nix;
+        desktop = provideFlakeInputsToHomeManager ./home/desktop.nix;
       };
 
       packages.x86_64-linux.default = self.packages.x86_64-linux.vm;

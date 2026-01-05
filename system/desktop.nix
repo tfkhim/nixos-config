@@ -1,12 +1,14 @@
 # This file is part of https://github.com/tfkhim/nixos-config
 #
-# Copyright (c) 2023 Thomas Himmelstoss
+# Copyright (c) 2026 Thomas Himmelstoss
 #
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
 { config, pkgs, ... }:
-
+let
+  uwsmHyprlandSessionTarget = "wayland-session@hyprland\\x2duwsm.desktop.target";
+in
 {
   imports = [
     ./single-user.nix
@@ -42,5 +44,42 @@
     script = ''
       flatpak remote-add --if-not-exists flathub ${./flathub.flatpakrepo}
     '';
+  };
+
+  # Provides the org.freedesktop.RealtimeKit1 DBus service to
+  # XDG Desktop Portal. Without this journalctl contains some
+  # warnings due to the missing interface.
+  security.rtkit.enable = true;
+
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    xwayland.enable = true;
+  };
+
+  # Adding the hyprland-session.target allows the auxiliary
+  # services (e.g. hypridle) to depend on the same target
+  # no matter which Systemd integration approach was chosen.
+  systemd.user.targets.hyprland-session = {
+    description = "Hyprland compositor session";
+    documentation = [ "man:systemd.special(7)" ];
+    wants = [ "graphical-session-pre.target" ];
+    wantedBy = [ uwsmHyprlandSessionTarget ];
+    bindsTo = [ "graphical-session.target" ];
+    after = [
+      uwsmHyprlandSessionTarget
+      "graphical-session-pre.target"
+    ];
+  };
+
+  programs.sway = {
+    enable = true;
+    xwayland.enable = true;
+
+    # This module assumes that other required tools (e.g.
+    # swaylock or swayidle) are installed through the home
+    # manager configuration. This avoids installing packages
+    # that are not used by the users Sway configuration.
+    extraPackages = [ ];
   };
 }
