@@ -43,6 +43,16 @@ in
     platformTheme.name = "gtk";
   };
 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      gtk-theme = "Adwaita-dark";
+      # The Settings interface of the GTK desktop portal uses this value.
+      # The Settings interface is used by some applicaitons like the
+      # system theme of Firefox.
+      color-scheme = "prefer-dark";
+    };
+  };
+
   home.pointerCursor = {
     name = "breeze_cursors";
     package = pkgs.kdePackages.breeze;
