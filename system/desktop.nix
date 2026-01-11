@@ -12,6 +12,7 @@ in
 {
   imports = [
     ./single-user.nix
+    ./modules/cosmic.nix
     ./modules/keyboard-remapping.nix
     ./modules/virtualisation.nix
   ];
