@@ -15,6 +15,8 @@ let
   inherit (lib) mkEnableOption mkPackageOption mkIf;
 
   cfg = config.custom.tfkhim.services.sway-notification-center;
+
+  systemdTarget = config.custom.tfkhim.desktops.minimal-wayland-desktop-extensions.systemdTarget;
 in
 {
   options.custom.tfkhim.services.sway-notification-center = {
@@ -36,8 +38,8 @@ in
       Unit = {
         Description = "A notification center for Sway and other wlroots based compositors.";
         Documentation = "https://github.com/ErikReider/SwayNotificationCenter";
-        PartOf = [ "graphical-session.target" ];
-        After = [ "graphical-session.target" ];
+        PartOf = [ systemdTarget ];
+        After = [ systemdTarget ];
       };
 
       Service = {
@@ -46,7 +48,7 @@ in
       };
 
       Install = {
-        WantedBy = [ "graphical-session.target" ];
+        WantedBy = [ systemdTarget ];
       };
     };
   };

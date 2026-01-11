@@ -12,7 +12,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkForce;
 
   # Unicode 2004: Three-Per-Em Space
   iconSeparator = " ";
@@ -43,6 +43,8 @@ let
       ""
     ];
   };
+
+  systemdTarget = mkForce config.custom.tfkhim.desktops.minimal-wayland-desktop-extensions.systemdTarget;
 in
 {
   programs.waybar = {
@@ -189,4 +191,17 @@ in
       };
     }
   ];
+
+  # By default the waybar service is also wanted by the tray.target.
+  # The tray.target is started by many services that require a tray
+  # (e.g. udiskie). Therefore, without this forced override waybar
+  # would be started in all desktop environments.
+  systemd.user.services.waybar = {
+    Unit = {
+      PartOf = mkForce [ systemdTarget ];
+      After = mkForce [ systemdTarget ];
+    };
+
+    Install.WantedBy = mkForce [ systemdTarget ];
+  };
 }

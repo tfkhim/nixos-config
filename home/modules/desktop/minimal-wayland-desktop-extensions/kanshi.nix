@@ -10,7 +10,7 @@
 {
   services.kanshi = {
     enable = true;
-    systemdTarget = "graphical-session.target";
+    systemdTarget = config.custom.tfkhim.desktops.minimal-wayland-desktop-extensions.systemdTarget;
   };
 
   # Add the kanshi package to be able to easily use

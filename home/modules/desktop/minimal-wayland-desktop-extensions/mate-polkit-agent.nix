@@ -5,8 +5,10 @@
 # This software is subject to the MIT license. You should have
 # received a copy of the license along with this program.
 
-{ pkgs, ... }:
-
+{ config, pkgs, ... }:
+let
+  systemdTarget = config.custom.tfkhim.desktops.minimal-wayland-desktop-extensions.systemdTarget;
+in
 {
   home.packages = [
     pkgs.mate.mate-polkit
@@ -15,8 +17,8 @@
   systemd.user.services.mate-polkit-agent = {
     Unit = {
       Description = "MATE polkit agent";
-      PartOf = [ "graphical-session.target" ];
-      After = [ "graphical-session.target" ];
+      PartOf = [ systemdTarget ];
+      After = [ systemdTarget ];
     };
 
     Service = {
@@ -26,7 +28,7 @@
     };
 
     Install = {
-      WantedBy = [ "graphical-session.target" ];
+      WantedBy = [ systemdTarget ];
     };
   };
 }
