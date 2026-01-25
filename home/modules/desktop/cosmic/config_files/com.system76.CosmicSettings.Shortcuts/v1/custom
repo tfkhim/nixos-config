@@ -1,0 +1,65 @@
+{
+    (
+        modifiers: [
+            Ctrl,
+        ],
+        key: "less",
+    ): System(MuteMic),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "n",
+    ): MoveToPreviousWorkspace,
+    (
+        modifiers: [
+            Super,
+        ],
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "o",
+    ): System(Launcher),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "n",
+    ): PreviousWorkspace,
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+        ],
+        key: "l",
+    ): System(LockScreen),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "m",
+    ): MoveToNextWorkspace,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "q",
+    ): Close,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "m",
+    ): NextWorkspace,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "Return",
+    ): System(Terminal),
+}

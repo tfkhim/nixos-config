@@ -22,6 +22,7 @@ in
     ./modules/desktop/base
     ./modules/desktop/hyprland
     ./modules/desktop/sway
+    ./modules/desktop/cosmic
     ./modules/desktop/minimal-wayland-desktop-extensions
     ./modules/misc
   ];
