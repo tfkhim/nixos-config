@@ -58,7 +58,13 @@
         symbol = " ";
       };
 
-      aws.format = " [\\[$symbol( $profile)( \\($region\\))( \\[$duration\\])\\]]($style)";
+      aws = {
+        format = " [\\[$symbol( $profile)( \\($region\\))\\]]($style)";
+        # The default symbol somehow breaks the ZSH prompt resulting in
+        # weird behavior during tab completion.
+        symbol = " ";
+      };
+
       java.format = " [\\[$symbol$version\\]]($style)";
       nodejs.format = " [\\[$symbol$version\\]]($style)";
       python.format = " [\\[$symbol$pyenv_prefix$version( \\($virtualenv\\))\\]]($style)";
