@@ -33,9 +33,10 @@ in
       "gd" = "git diff";
       "gdc" = "git diff --cached";
       "gau" = "git add --update";
+      "gaup" = "git add --update --patch";
       "gc" = "git commit";
       "gca" = "git commit --amend";
-      "gpp" = "git pull --prune";
+      "gp" = "git pull";
       "gri" = "git rebase --interactive --autosquash";
     };
 

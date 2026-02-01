@@ -13,6 +13,9 @@
       merge = {
         conflictstyle = "diff3";
       };
+      fetch = {
+        prune = true;
+      };
       pull = {
         ff = "only";
       };
