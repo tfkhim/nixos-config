@@ -218,6 +218,9 @@ in
         dwt = "enabled";
         tap = "enabled";
         middle_emulation = "enabled";
+        # The drag_lock setting can be removed in the future (Sway version > 1.11).
+        # See: https://github.com/swaywm/sway/issues/8758
+        drag_lock = "disabled";
       };
       "type:keyboard" = {
         xkb_model = "pc101";
