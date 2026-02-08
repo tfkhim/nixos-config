@@ -8,8 +8,9 @@
 {
   imports = [
     ./modules/base.nix
-    ./modules/sshd.nix
-    ./modules/secure-dns.nix
+    ./modules/development-sandbox
     ./modules/main-user.nix
+    ./modules/secure-dns.nix
+    ./modules/sshd.nix
   ];
 }

@@ -35,6 +35,11 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    microvm = {
+      url = "github:microvm-nix/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -44,21 +49,31 @@
       home-manager,
       sops-nix,
       nixos-generators,
+      microvm,
       ...
     }@inputs:
     let
-      provideFlakeInputsToSystemConfig = rootModule: {
-        # The _modules.args option can't be used to add modules
-        # from flakes to the imports. Therefore we import the
-        # required modules in this wrapper.
-        imports = [
-          home-manager.nixosModules.home-manager
-          sops-nix.nixosModules.sops
-          rootModule
-        ];
+      provideFlakeInputsToSystemConfig =
+        rootModule:
+        { lib, ... }:
+        {
+          # The _modules.args option can't be used to add modules
+          # from flakes to the imports. Therefore we import the
+          # required modules in this wrapper.
+          imports = [
+            home-manager.nixosModules.home-manager
+            sops-nix.nixosModules.sops
+            microvm.nixosModules.host
+            rootModule
+          ];
 
-        _module.args.inputs = inputs;
-      };
+          # By default the host part of the microvm module is enabled.
+          # It is nicer to only enable it if a module requiring it is
+          # enabled.
+          microvm.host.enable = lib.mkDefault false;
+
+          _module.args.inputs = inputs;
+        };
 
       provideFlakeInputsToHomeManager = rootModule: {
         # This imports follow the same reasoning as in
