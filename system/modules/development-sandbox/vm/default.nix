@@ -45,6 +45,10 @@ in
   # without needing to copying them manually.
   environment.enableAllTerminfo = true;
 
+  # Avoid long shutdown or reboot times. See:
+  # https://mas.to/@zekjur/113109742103219075
+  systemd.settings.Manager.DefaultTimeoutStopSec = "3s";
+
   home-manager.users.${cfg.user} = mkMerge [
     inputs.sops-nix.homeManagerModules.sops
     ../../../../home/cli-user.nix
