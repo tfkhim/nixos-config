@@ -63,21 +63,21 @@ in
       environment.etc."ssh/authorized_keys.d/${cfg.user}".source = getSandboxFilePath authorizedKeysFile;
     };
 
-    environment.systemPackages =
+    programs.ssh.extraConfig =
       let
-        ssh = "${config.programs.ssh.package}/bin/ssh";
         coreutils = pkgs.coreutils-full;
 
         knownHostsCommand = pkgs.writeShellScript "devsb-known-hosts-command" ''
-          set -euo pipefail
           echo ${cfg.network.sandbox.ipv4} $(${coreutils}/bin/cut -d ' ' -f 1,2 ${getHostFilePath publicHostKeyFile})
         '';
-
-        devsb-ssh = pkgs.writeShellScriptBin "devsb-ssh" ''
-          set -euo pipefail
-          exec ${ssh} -i "${cfg.stateDir}/${privateAccessKeyFile}" -o KnownHostsCommand=${knownHostsCommand} ${cfg.user}@${cfg.network.sandbox.ipv4}
-        '';
       in
-      [ devsb-ssh ];
+      ''
+        Host ${cfg.vmName}
+          HostName ${cfg.network.sandbox.ipv4}
+          User ${cfg.user}
+          IdentitiesOnly yes
+          IdentityFile ${cfg.stateDir}/${privateAccessKeyFile}
+          KnownHostsCommand=${knownHostsCommand}
+      '';
   };
 }
