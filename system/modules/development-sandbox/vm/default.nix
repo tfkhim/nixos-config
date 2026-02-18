@@ -55,6 +55,12 @@ in
     cfg.userConfig
     {
       home.stateVersion = hostConfig.system.stateVersion;
+
+      # Required to create Git commits as the sandbox user.
+      programs.git.settings.user = {
+        email = "${cfg.user}@${cfg.vmName}.local";
+        name = cfg.user;
+      };
     }
   ];
 }
