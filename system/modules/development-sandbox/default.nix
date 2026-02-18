@@ -24,6 +24,7 @@ let
 in
 {
   imports = [
+    ./devsb-cli.nix
     ./network.nix
     ./share-setup.nix
     ./ssh-access.nix
