@@ -36,23 +36,32 @@ let
       if [ "$isGitRepo" = "true" ]; then
         branch=$(${git} branch --show-current)
 
-        ${ssh} ${cfg.vmName} git init -b "working" "$workspaceDir"
-        ${ssh} ${cfg.vmName} $SHELL "-c 'cd $workspaceDir && git config --local receive.denyCurrentBranch updateInstead'"
+        ${ssh} ${cfg.vmName} git init -b "$branch" "$workspaceDir"
+        ${ssh} ${cfg.vmName} $SHELL "-c 'cd $workspaceDir && git remote add origin /dev/null'"
         ${git} remote remove "${cfg.vmName}" || true
         ${git} remote add "${cfg.vmName}" "ssh://${cfg.vmName}$workspaceDir"
-        ${git} push "${cfg.vmName}" "$branch:working"
+        workspaceReset
       else
         ${scp} -r "$PWD" "${cfg.vmName}:$workspaceDir"
       fi
+    }
+
+    function workspaceReset() {
+      workspaceDir=$(${git} remote get-url ${cfg.vmName} | sed 's\ssh://[^/]*\\')
+      branch=$(${git} branch --show-current)
+      ${git} push --force "${cfg.vmName}" "$branch:origin/$branch"
+      ${ssh} ${cfg.vmName} $SHELL "-c 'cd $workspaceDir && git restore --staged --worktree . ; git clean -x; git switch $branch; git reset --hard origin/$branch'"
     }
 
     case "''${1:-no-args}" in
       enter|no-args)
         exec ${ssh} ${cfg.vmName}
         ;;
-      workspace-init)
-        shift
-        workspaceInit "$@"
+      ws-init)
+        workspaceInit
+        ;;
+      ws-reset)
+        workspaceReset
         ;;
       exec)
         shift
