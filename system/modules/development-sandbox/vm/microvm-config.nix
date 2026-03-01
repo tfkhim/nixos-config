@@ -45,6 +45,7 @@ in
       {
         proto = "virtiofs";
         tag = "ro-store";
+        readOnly = true;
         source = "/nix/store";
         mountPoint = "/nix/.ro-store";
       }
