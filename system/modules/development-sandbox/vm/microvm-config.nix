@@ -37,6 +37,9 @@ in
       "-Efragments,ztailpacking"
     ];
 
+    # Avoids 'too many open files' errors
+    virtiofsd.inodeFileHandles = "mandatory";
+
     volumes = [
       {
         mountPoint = "/home";
