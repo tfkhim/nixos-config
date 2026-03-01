@@ -28,6 +28,15 @@ in
     # Home Manager needs a writeable Nix store
     writableStoreOverlay = "/nix/.rw-store";
 
+    # The dedupe option doesn't lead to a big size reduction
+    # and takes too much time during the build. According to the
+    # erofs documentation LZ4 has the best runtime performance:
+    # https://erofs.docs.kernel.org/en/latest/faq.html
+    storeDiskErofsFlags = [
+      "-zlz4"
+      "-Efragments,ztailpacking"
+    ];
+
     volumes = [
       {
         mountPoint = "/home";
@@ -42,13 +51,6 @@ in
     ];
 
     shares = [
-      {
-        proto = "virtiofs";
-        tag = "ro-store";
-        readOnly = true;
-        source = "/nix/store";
-        mountPoint = "/nix/.ro-store";
-      }
       {
         proto = "virtiofs";
         tag = "persistent-config";
