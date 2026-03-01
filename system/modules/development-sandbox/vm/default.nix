@@ -12,7 +12,7 @@
   ...
 }:
 let
-  inherit (lib) mkMerge;
+  inherit (lib) mkMerge mkForce;
   cfg = hostConfig.custom.tfkhim.development-sandbox;
 in
 {
@@ -40,6 +40,12 @@ in
   # dev user shouldn't need root access.
   users.allowNoPasswordLogin = true;
   security.sudo.enable = false;
+
+  # The sandbox should never need to perform a garbage collection.
+  # Either, it is a squashfs filesystem containing only what is needed
+  # or it is a share of the host. In the latter case the host will
+  # perform garbage collections.
+  nix.gc.automatic = mkForce false;
 
   # Useful to ensure the required terminfo files are there
   # without needing to copying them manually.
