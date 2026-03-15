@@ -109,6 +109,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1772964882,
+        "narHash": "sha256-rQWU+NrCXjoqrtBX7dsXxO0f/pXcJawpk4Jev3whjc8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "387ad1f9c23d9795fb0f4940c7fef2cd9b51c2a8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1767364772,
@@ -131,6 +147,7 @@
         "microvm": "microvm",
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "sops-nix": "sops-nix",
         "sway-workspace-extras": "sway-workspace-extras"
       }
