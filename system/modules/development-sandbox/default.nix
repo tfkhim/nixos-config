@@ -152,6 +152,9 @@ in
       config = mkMerge [
         cfg.systemConfig
         ./vm
+        {
+          home-manager.extraSpecialArgs = { inherit inputs; };
+        }
       ];
     };
   };

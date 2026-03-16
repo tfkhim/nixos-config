@@ -8,6 +8,7 @@
 {
   imports = [
     ./modules/base.nix
+    ./modules/latest-packages.nix
     ./modules/terminal
   ];
 }

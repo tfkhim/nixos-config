@@ -7,7 +7,6 @@
 
 {
   imports = [
-    ./latest-packages.nix
     ./podman-machine.nix
     ./virtualisation.nix
   ];
