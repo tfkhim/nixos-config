@@ -101,7 +101,8 @@ let
         exec ${ssh} ${cfg.vmName} "$@"
         ;;
       *)
-        exec ${ssh} ${cfg.vmName} "$@"
+        echo "Unknown command: $1"
+        exit 1
         ;;
     esac
   '';
