@@ -26,6 +26,18 @@ let
   devsb = pkgs.writeShellScriptBin "devsb" ''
     set -euo pipefail
 
+    function enter() {
+      isGitRepo="$(${git} rev-parse --is-inside-work-tree 2>/dev/null || echo false)"
+
+      if [ "$isGitRepo" = "true" ]; then
+        remoteDir=$(${git} remote get-url ${cfg.vmName} | sed 's\ssh://[^/]*\\')
+      else
+        remoteDir="/home/${cfg.user}/$(${realpath} -m --relative-to=$HOME $PWD)"
+      fi
+
+      exec ${ssh} -t ${cfg.vmName} "cd $remoteDir 2>/dev/null; exec \$SHELL"
+    }
+
     function workspaceInit() {
       workspaceDir="/home/${cfg.user}/$(${realpath} -m --relative-to=$HOME $PWD)"
       workspaceParent=$(${dirname} "$workspaceDir")
@@ -56,7 +68,7 @@ let
 
     case "''${1:-no-args}" in
       enter|no-args)
-        exec ${ssh} ${cfg.vmName}
+        enter
         ;;
       ws-init)
         workspaceInit
