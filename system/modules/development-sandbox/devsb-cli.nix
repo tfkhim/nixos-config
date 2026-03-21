@@ -49,7 +49,7 @@ let
         branch=$(${git} branch --show-current)
 
         ${ssh} ${cfg.vmName} git init -b "$branch" "$workspaceDir"
-        ${ssh} ${cfg.vmName} $SHELL "-c 'cd $workspaceDir && git remote add origin /dev/null'"
+        ${ssh} ${cfg.vmName} /bin/sh "-c 'cd $workspaceDir && git remote add origin /dev/null'"
         ${git} remote remove "${cfg.vmName}" || true
         ${git} remote add "${cfg.vmName}" "ssh://${cfg.vmName}$workspaceDir"
         workspaceReset
@@ -62,7 +62,7 @@ let
       workspaceDir=$(${git} remote get-url ${cfg.vmName} | sed 's\ssh://[^/]*\\')
       branch=$(${git} branch --show-current)
       ${git} push --force "${cfg.vmName}" "$branch:origin/$branch"
-      ${ssh} ${cfg.vmName} $SHELL "-c 'cd $workspaceDir && git restore --staged --worktree . ; git clean --force; git switch $branch; git reset --hard origin/$branch'"
+      ${ssh} ${cfg.vmName} /bin/sh "-c 'cd $workspaceDir && git restore --staged --worktree . ; git clean --force; git switch $branch; git reset --hard origin/$branch'"
       ${git} fetch "${cfg.vmName}"
     }
 
