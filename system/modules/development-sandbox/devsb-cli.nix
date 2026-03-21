@@ -66,6 +66,14 @@ let
       ${git} fetch "${cfg.vmName}"
     }
 
+    function workspaceGet() {
+      headBeforeCherryPick=$(${git} rev-parse HEAD)
+      branch=$(${git} branch --show-current)
+      ${git} fetch "${cfg.vmName}"
+      ${git} cherry-pick --empty=drop "${cfg.vmName}/origin/$branch..${cfg.vmName}/$branch"
+      ${git} rebase --exec "${git} commit --amend --no-edit --reset-author" $headBeforeCherryPick $branch
+    }
+
     case "''${1:-no-args}" in
       enter|no-args)
         enter
@@ -75,6 +83,9 @@ let
         ;;
       ws-reset)
         workspaceReset
+        ;;
+      ws-get)
+        workspaceGet
         ;;
       exec)
         shift
