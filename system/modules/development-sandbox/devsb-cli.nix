@@ -51,6 +51,7 @@ let
       branch=$(${git} branch --show-current)
       ${git} push --force "${cfg.vmName}" "$branch:origin/$branch"
       ${ssh} ${cfg.vmName} $SHELL "-c 'cd $workspaceDir && git restore --staged --worktree . ; git clean --force; git switch $branch; git reset --hard origin/$branch'"
+      ${git} fetch "${cfg.vmName}"
     }
 
     case "''${1:-no-args}" in
