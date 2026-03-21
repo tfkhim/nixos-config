@@ -50,7 +50,7 @@ let
       workspaceDir=$(${git} remote get-url ${cfg.vmName} | sed 's\ssh://[^/]*\\')
       branch=$(${git} branch --show-current)
       ${git} push --force "${cfg.vmName}" "$branch:origin/$branch"
-      ${ssh} ${cfg.vmName} $SHELL "-c 'cd $workspaceDir && git restore --staged --worktree . ; git clean -x; git switch $branch; git reset --hard origin/$branch'"
+      ${ssh} ${cfg.vmName} $SHELL "-c 'cd $workspaceDir && git restore --staged --worktree . ; git clean --force; git switch $branch; git reset --hard origin/$branch'"
     }
 
     case "''${1:-no-args}" in
