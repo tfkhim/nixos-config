@@ -74,6 +74,12 @@ let
       ${git} rebase --exec "${git} commit --amend --no-edit --reset-author" $headBeforeCherryPick $branch
     }
 
+    function workspaceGetSquashed() {
+      branch=$(${git} branch --show-current)
+      ${git} fetch "${cfg.vmName}"
+      ${git} merge --squash --no-commit "${cfg.vmName}/$branch"
+    }
+
     case "''${1:-no-args}" in
       enter|no-args)
         enter
@@ -86,6 +92,9 @@ let
         ;;
       ws-get)
         workspaceGet
+        ;;
+      ws-get-squashed)
+        workspaceGetSquashed
         ;;
       exec)
         shift
