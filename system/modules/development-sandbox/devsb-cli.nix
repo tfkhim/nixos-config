@@ -58,11 +58,17 @@ let
       fi
     }
 
-    function workspaceReset() {
-      workspaceDir=$(${git} remote get-url ${cfg.vmName} | sed 's\ssh://[^/]*\\')
+    function workspacePush() {
       branch=$(${git} branch --show-current)
       ${git} push --force "${cfg.vmName}" "$branch:origin/$branch"
-      ${ssh} ${cfg.vmName} /bin/sh "-c 'cd $workspaceDir && git restore --staged --worktree . ; git clean --force; git switch $branch; git reset --hard origin/$branch'"
+    }
+
+    function workspaceReset() {
+      workspacePush
+
+      workspaceDir=$(${git} remote get-url ${cfg.vmName} | sed 's\ssh://[^/]*\\')
+      branch=$(${git} branch --show-current)
+      ${ssh} ${cfg.vmName} /bin/sh "-c 'cd $workspaceDir && git restore --staged --worktree .; git clean --force; git switch $branch; git branch --set-upstream-to=origin/$branch $branch; git reset --hard origin/$branch'"
       ${git} fetch "${cfg.vmName}"
     }
 
@@ -86,6 +92,9 @@ let
         ;;
       ws-init)
         workspaceInit
+        ;;
+      ws-push)
+        workspacePush
         ;;
       ws-reset)
         workspaceReset
