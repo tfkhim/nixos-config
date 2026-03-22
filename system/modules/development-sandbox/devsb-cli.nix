@@ -68,7 +68,7 @@ let
 
       workspaceDir=$(${git} remote get-url ${cfg.vmName} | sed 's\ssh://[^/]*\\')
       branch=$(${git} branch --show-current)
-      ${ssh} ${cfg.vmName} /bin/sh "-c 'cd $workspaceDir && git restore --staged --worktree .; git clean --force; git switch $branch; git branch --set-upstream-to=origin/$branch $branch; git reset --hard origin/$branch'"
+      ${ssh} ${cfg.vmName} /bin/sh "-c 'cd $workspaceDir && git restore --staged --worktree .; git clean -d --force; git switch $branch; git branch --set-upstream-to=origin/$branch $branch; git reset --hard origin/$branch'"
       ${git} fetch "${cfg.vmName}"
     }
 
