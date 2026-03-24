@@ -77,7 +77,7 @@ let
       branch=$(${git} branch --show-current)
       ${git} fetch "${cfg.vmName}"
       ${git} cherry-pick --empty=drop "${cfg.vmName}/origin/$branch..${cfg.vmName}/$branch"
-      ${git} rebase --exec "${git} commit --amend --no-edit --reset-author" $headBeforeCherryPick $branch
+      ${git} rebase --exec "${git} commit --amend --no-edit --no-verify --reset-author" $headBeforeCherryPick $branch
     }
 
     function workspaceGetSquashed() {
