@@ -30,16 +30,14 @@ let
       ${git} remotes show | grep -q "${cfg.vmName}" && echo true || echo false
     }
 
-    function enter() {
+    function getRemoteDir() {
       isGitRepo="$(${git} rev-parse --is-inside-work-tree 2>/dev/null || echo false)"
 
       if [ "$isGitRepo" = "true" ] && [ hasSandboxRemote = "true" ]; then
-        remoteDir=$(${git} remote get-url ${cfg.vmName} | sed 's\ssh://[^/]*\\')
+        echo $(${git} remote get-url ${cfg.vmName} | sed 's\ssh://[^/]*\\')
       else
-        remoteDir="/home/${cfg.user}/$(${realpath} -m --relative-to=$HOME $PWD)"
+        echo "/home/${cfg.user}/$(${realpath} -m --relative-to=$HOME $PWD)"
       fi
-
-      exec ${ssh} -t ${cfg.vmName} "cd $remoteDir 2>/dev/null; exec \$SHELL"
     }
 
     function workspaceInit() {
@@ -92,7 +90,7 @@ let
 
     case "''${1:-no-args}" in
       enter|no-args)
-        enter
+        exec ${ssh} -t ${cfg.vmName} "cd $(getRemoteDir) 2>/dev/null; exec \$SHELL"
         ;;
       ws-init)
         workspaceInit
@@ -108,6 +106,10 @@ let
         ;;
       ws-get-squashed)
         workspaceGetSquashed
+        ;;
+      ws-exec)
+        shift
+        exec ${ssh} -t ${cfg.vmName} "cd $(getRemoteDir) && exec $@"
         ;;
       exec)
         shift
