@@ -20,6 +20,7 @@ let
   realpath = "${coreutils}/bin/realpath";
   dirname = "${coreutils}/bin/dirname";
   ssh = "${config.programs.ssh.package}/bin/ssh";
+  sshfs = "${pkgs.sshfs}/bin/sshfs";
   scp = "${config.programs.ssh.package}/bin/scp";
   git = "${config.programs.git.package}/bin/git";
 
@@ -88,6 +89,12 @@ let
       ${git} merge --squash --no-commit "${cfg.vmName}/$branch"
     }
 
+    function workspaceMount() {
+        mountDir="''${1:-./sandbox}"
+        mkdir -p "$mountDir"
+        ${sshfs} "${cfg.vmName}:$(getRemoteDir)" "$mountDir"
+    }
+
     case "''${1:-no-args}" in
       enter|no-args)
         exec ${ssh} -t ${cfg.vmName} "cd $(getRemoteDir) 2>/dev/null; exec \$SHELL"
@@ -110,6 +117,10 @@ let
       ws-exec)
         shift
         exec ${ssh} -t ${cfg.vmName} "cd $(getRemoteDir) && exec $@"
+        ;;
+      ws-mount)
+        shift
+        workspaceMount "$@"
         ;;
       exec)
         shift
