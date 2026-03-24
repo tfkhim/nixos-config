@@ -111,7 +111,7 @@ let
         ;;
       exec)
         shift
-        exec ${ssh} ${cfg.vmName} "$@"
+        exec ${ssh} -t ${cfg.vmName} "$@"
         ;;
       *)
         echo "Unknown command: $1"
