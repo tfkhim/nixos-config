@@ -26,10 +26,14 @@ let
   devsb = pkgs.writeShellScriptBin "devsb" ''
     set -euo pipefail
 
+    function hasSandboxRemote() {
+      ${git} remotes show | grep -q "${cfg.vmName}" && echo true || echo false
+    }
+
     function enter() {
       isGitRepo="$(${git} rev-parse --is-inside-work-tree 2>/dev/null || echo false)"
 
-      if [ "$isGitRepo" = "true" ]; then
+      if [ "$isGitRepo" = "true" ] && [ hasSandboxRemote = "true" ]; then
         remoteDir=$(${git} remote get-url ${cfg.vmName} | sed 's\ssh://[^/]*\\')
       else
         remoteDir="/home/${cfg.user}/$(${realpath} -m --relative-to=$HOME $PWD)"
