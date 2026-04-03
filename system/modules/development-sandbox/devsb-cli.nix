@@ -84,11 +84,14 @@ let
     }
 
     function workspaceGetCommits() {
+      ${git} fetch "${cfg.vmName}"
       headBeforeCherryPick=$(${git} rev-parse HEAD)
       branch=$(${git} branch --show-current)
-      ${git} fetch "${cfg.vmName}"
-      ${git} cherry-pick --empty=drop "${cfg.vmName}/origin/$branch..${cfg.vmName}/$branch"
-      ${git} rebase --exec "${git} commit --amend --no-edit --no-verify --reset-author" $headBeforeCherryPick $branch
+      numCommits="$(${git} rev-list "${cfg.vmName}/origin/$branch..${cfg.vmName}/$branch" | wc --lines)"
+      if [ "$numCommits" -gt 0 ]; then
+        ${git} cherry-pick --empty=drop "${cfg.vmName}/origin/$branch..${cfg.vmName}/$branch"
+        ${git} rebase --exec "${git} commit --amend --no-edit --no-verify --reset-author" $headBeforeCherryPick $branch
+      fi
     }
 
     function workspaceGetSquashed() {
