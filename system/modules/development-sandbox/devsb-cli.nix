@@ -98,12 +98,6 @@ let
       fi
     }
 
-    function workspaceGetSquashed() {
-      branch=$(${git} branch --show-current)
-      ${git} fetch "${cfg.vmName}"
-      ${git} merge --squash --no-commit "${cfg.vmName}/$branch"
-    }
-
     function workspaceMount() {
         mountDir="''${1:-./sandbox}"
         mkdir -p "$mountDir"
@@ -134,9 +128,6 @@ let
         ;;
       ws-get-commits)
         workspaceGetCommits
-        ;;
-      ws-get-squashed)
-        workspaceGetSquashed
         ;;
       ws-exec)
         shift
