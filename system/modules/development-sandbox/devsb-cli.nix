@@ -24,6 +24,8 @@ let
   scp = "${config.programs.ssh.package}/bin/scp";
   git = "${config.programs.git.package}/bin/git";
 
+  startCommand = "${config.systemd.package}/bin/systemctl start microvm@${cfg.vmName}.service";
+
   devsb = pkgs.writeShellScriptBin "devsb" ''
     set -euo pipefail
 
@@ -99,6 +101,9 @@ let
       enter|no-args)
         exec ${ssh} -t ${cfg.vmName} "cd $(getRemoteDir) 2>/dev/null; exec \$SHELL"
         ;;
+      start)
+        exec "${config.security.wrapperDir}/sudo" ${startCommand}
+        ;;
       ws-init)
         workspaceInit
         ;;
@@ -136,5 +141,17 @@ in
 {
   config = mkIf cfg.enable {
     environment.systemPackages = [ devsb ];
+
+    security.sudo.extraRules = [
+      {
+        groups = [ "wheel" ];
+        commands = [
+          {
+            command = startCommand;
+            options = [ "NOPASSWD" ];
+          }
+        ];
+      }
+    ];
   };
 }
