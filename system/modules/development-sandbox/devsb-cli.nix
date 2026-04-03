@@ -77,6 +77,10 @@ let
       ${git} fetch "${cfg.vmName}"
     }
 
+    function workspaceFetch() {
+      ${git} fetch "${cfg.vmName}"
+    }
+
     function workspaceGet() {
       ${git} fetch "${cfg.vmName}"
       branch=$(${git} branch --show-current)
@@ -121,6 +125,9 @@ let
         ;;
       ws-reset)
         workspaceReset
+        ;;
+      ws-fetch)
+        workspaceFetch
         ;;
       ws-get)
         workspaceGet
