@@ -78,6 +78,12 @@ let
     }
 
     function workspaceGet() {
+      ${git} fetch "${cfg.vmName}"
+      branch=$(${git} branch --show-current)
+      ${ssh} ${cfg.vmName} "cd $(getRemoteDir) && exec git diff 'origin/$branch'" | ${git} apply --index --allow-empty
+    }
+
+    function workspaceGetCommits() {
       headBeforeCherryPick=$(${git} rev-parse HEAD)
       branch=$(${git} branch --show-current)
       ${git} fetch "${cfg.vmName}"
@@ -115,6 +121,9 @@ let
         ;;
       ws-get)
         workspaceGet
+        ;;
+      ws-get-commits)
+        workspaceGetCommits
         ;;
       ws-get-squashed)
         workspaceGetSquashed
