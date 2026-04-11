@@ -19,48 +19,81 @@ let
   accessUser = config.custom.tfkhim.mainUser;
   accessUserGroup = config.users.users.${accessUser}.group;
 
-  getHostFilePath = relativePath: "${cfg.stateDir}/shares/config/${relativePath}";
-  getSandboxFilePath = relativePath: "/persistent/shared-config/${relativePath}";
-
   keyType = "ed25519";
   privateAccessKeyFile = "dev_sandbox_${keyType}";
   publicAccessKeyFile = "${privateAccessKeyFile}.pub";
   authorizedKeysFile = "${cfg.user}_authorized_keys";
   privateHostKeyFile = "ssh_host_${keyType}_key";
   publicHostKeyFile = "${privateHostKeyFile}.pub";
+
+  driveLabel = "ssh-config";
+  mountPath = "/ssh_config";
 in
 {
   config = mkIf cfg.enable {
-    custom.tfkhim.development-sandbox.shareSetupScripts = ''
-      if [ ! -f "${cfg.stateDir}/${privateAccessKeyFile}" ]; then
-          ssh-keygen -t ${keyType} -N "" -f "${cfg.stateDir}/${privateAccessKeyFile}"
-          chown ${accessUser}:${accessUserGroup} "${cfg.stateDir}/${privateAccessKeyFile}"
+    systemd.services.development-sandbox-build-ssh-config = {
+      serviceConfig.Type = "oneshot";
+      unitConfig.ConditionPathExists = cfg.stateDir;
+      requiredBy = [ "install-microvm-${cfg.vmName}.service" ];
+      after = [ "install-microvm-${cfg.vmName}.service" ];
+      before = [ "microvm@${cfg.vmName}.service" ];
+      path = [
+        pkgs.coreutils
+        config.services.openssh.package
+        pkgs.erofs-utils
+      ];
+      script = ''
+        if [ ! -f "${cfg.stateDir}/ssh_config.erofs" ] || [ ! -f "${cfg.stateDir}/${privateAccessKeyFile}" ] || [ ! -f "${cfg.stateDir}/${publicHostKeyFile}" ]; then
+          tmpDir=$(mktemp -d)
+          mkdir -p "$tmpDir/${mountPath}"
 
-          mv "${cfg.stateDir}/${publicAccessKeyFile}" "${getHostFilePath authorizedKeysFile}"
+          ssh-keygen -t ${keyType} -N "" -f "$tmpDir/${privateAccessKeyFile}"
+          mv "$tmpDir/${publicAccessKeyFile}" "$tmpDir/${mountPath}/${authorizedKeysFile}"
+
+          ssh-keygen -t ${keyType} -N "" -f "$tmpDir/${mountPath}/${privateHostKeyFile}"
+
           # Those permissions are important. If the the file or any of its parent
           # directories is writeable by a non-root user the SSH daemon will reject it.
-          chown root:root "${getHostFilePath authorizedKeysFile}"
-          chmod u=rw,g=r,o=r "${getHostFilePath authorizedKeysFile}"
-      fi
+          chown -R root:root "$tmpDir/${mountPath}"
+          chmod u=rw,g=r,o=r "$tmpDir/${mountPath}/${authorizedKeysFile}"
 
-      if [ ! -f "${getHostFilePath privateHostKeyFile}" ]; then
-          ssh-keygen -t ${keyType} -N "" -f "${getHostFilePath privateHostKeyFile}"
-          chown root:root "${getHostFilePath privateHostKeyFile}"
-          chown root:root "${getHostFilePath publicHostKeyFile}"
-      fi
-    '';
+          mkfs.erofs -L ${driveLabel} "${cfg.stateDir}/ssh_config.erofs" "$tmpDir/${mountPath}"
+
+          mv "$tmpDir/${privateAccessKeyFile}" "${cfg.stateDir}/${privateAccessKeyFile}"
+          chown ${accessUser}:${accessUserGroup} "${cfg.stateDir}/${privateAccessKeyFile}"
+
+          cp "$tmpDir/${mountPath}/${publicHostKeyFile}" "${cfg.stateDir}/${publicHostKeyFile}"
+          chown ${accessUser}:${accessUserGroup} "${cfg.stateDir}/${publicHostKeyFile}"
+        fi
+      '';
+    };
 
     microvm.vms."${cfg.vmName}".config = {
+      microvm.qemu.extraArgs = [
+        "-drive"
+        "id=${driveLabel},format=raw,read-only=on,file=${cfg.stateDir}/ssh_config.erofs,if=none,aio=io_uring"
+        "-device"
+        "virtio-blk-device,drive=${driveLabel}"
+      ];
+
+      fileSystems.${mountPath} = {
+        device = "/dev/disk/by-label/${driveLabel}";
+        fsType = "erofs";
+        options = [ "x-systemd.after=systemd-modules-load.service" ];
+        neededForBoot = true;
+        noCheck = true;
+      };
+
       services.sshd.enable = true;
 
       services.openssh.hostKeys = [
         {
-          path = getSandboxFilePath privateHostKeyFile;
+          path = "${mountPath}/${privateHostKeyFile}";
           type = keyType;
         }
       ];
 
-      environment.etc."ssh/authorized_keys.d/${cfg.user}".source = getSandboxFilePath authorizedKeysFile;
+      environment.etc."ssh/authorized_keys.d/${cfg.user}".source = "${mountPath}/${authorizedKeysFile}";
     };
 
     programs.ssh.extraConfig =
@@ -68,7 +101,7 @@ in
         coreutils = pkgs.coreutils-full;
 
         knownHostsCommand = pkgs.writeShellScript "devsb-known-hosts-command" ''
-          echo ${cfg.network.sandbox.ipv4} $(${coreutils}/bin/cut -d ' ' -f 1,2 ${getHostFilePath publicHostKeyFile})
+          echo ${cfg.network.sandbox.ipv4} $(${coreutils}/bin/cut -d ' ' -f 1,2 ${cfg.stateDir}/${publicHostKeyFile})
         '';
       in
       ''

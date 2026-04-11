@@ -26,7 +26,6 @@ in
   imports = [
     ./devsb-cli.nix
     ./network.nix
-    ./share-setup.nix
     ./ssh-access.nix
   ];
 
@@ -87,12 +86,6 @@ in
       description = "Home Manager configuration for the sandbox user";
       type = types.deferredModule;
       default = { };
-    };
-
-    shareSetupScripts = mkOption {
-      description = "A set of shell script fragments that are executed to populate the shared folders";
-      type = types.lines;
-      default = "";
     };
 
     network = {

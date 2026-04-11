@@ -37,9 +37,6 @@ in
       "-Efragments,ztailpacking"
     ];
 
-    # Avoids 'too many open files' errors
-    virtiofsd.inodeFileHandles = "mandatory";
-
     volumes = [
       {
         mountPoint = "/home";
@@ -53,15 +50,6 @@ in
       }
     ];
 
-    shares = [
-      {
-        proto = "virtiofs";
-        tag = "persistent-config";
-        source = "shares/config";
-        mountPoint = "/persistent/shared-config";
-      }
-    ];
-
     interfaces = [
       {
         type = "tap";
@@ -70,10 +58,6 @@ in
       }
     ];
   };
-
-  # This share should be able to contain files (e.g. machine-id) that
-  # are needed very early in the boot process.
-  fileSystems."/persistent/shared-config".neededForBoot = true;
 
   # The user home directory generation runs during the activation
   # phase. So, we need the home mount to be present at that point
