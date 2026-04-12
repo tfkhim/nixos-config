@@ -39,14 +39,9 @@ in
 
     volumes = [
       {
-        mountPoint = "/home";
-        image = "home.img";
-        size = cfg.homeSize;
-      }
-      {
-        mountPoint = "/var";
-        image = "var.img";
-        size = cfg.varSize;
+        mountPoint = "/";
+        image = "root_volume.img";
+        size = cfg.diskSize;
       }
     ];
 
@@ -58,9 +53,4 @@ in
       }
     ];
   };
-
-  # The user home directory generation runs during the activation
-  # phase. So, we need the home mount to be present at that point
-  # in time.
-  fileSystems."/home".neededForBoot = true;
 }

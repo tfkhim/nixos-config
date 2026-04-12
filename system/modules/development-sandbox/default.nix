@@ -64,14 +64,8 @@ in
       type = types.ints.positive;
     };
 
-    varSize = mkOption {
-      description = "Size of the /var volume";
-      default = 8192;
-      type = types.ints.positive;
-    };
-
-    homeSize = mkOption {
-      description = "Size of the /home volume";
+    diskSize = mkOption {
+      description = "Size of the root volume";
       default = 8192;
       type = types.ints.positive;
     };
