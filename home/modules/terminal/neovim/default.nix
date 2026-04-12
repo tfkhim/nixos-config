@@ -25,6 +25,7 @@
       require("tfkhim.fidget")
       require("tfkhim.neotest")
       require("tfkhim.nvim-tree")
+      require("tfkhim.markdown-preview")
     '';
 
     plugins =
@@ -69,6 +70,7 @@
         nvim-web-devicons
         flash-nvim
         nvim-tree-lua
+        markdown-preview-nvim
       ]
       ++ telescopePlugins
       ++ lspPlugins
