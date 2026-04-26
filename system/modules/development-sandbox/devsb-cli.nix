@@ -85,6 +85,12 @@ let
       ${git} fetch "${cfg.vmName}"
       branch=$(${git} branch --show-current)
       ${ssh} ${cfg.vmName} "cd $(getRemoteDir) && exec git diff 'origin/$branch'" | ${git} apply --index --allow-empty
+
+      for untrackedFile in $(${ssh} ${cfg.vmName} "cd $(getRemoteDir) && exec git ls-files --others --exclude-standard --directory")
+      do
+        ${scp} -r "${cfg.vmName}:$(getRemoteDir)/$untrackedFile" "$PWD/$untrackedFile"
+        ${git} add "$PWD/$untrackedFile"
+      done
     }
 
     function workspaceGetCommits() {
