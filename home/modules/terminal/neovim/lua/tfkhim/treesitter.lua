@@ -1,29 +1,30 @@
 -- This file is part of https://github.com/tfkhim/nixos-config
 --
--- Copyright (c) 2024 Thomas Himmelstoss
+-- Copyright (c) 2026 Thomas Himmelstoss
 --
 -- This software is subject to the MIT license. You should have
 -- received a copy of the license along with this program.
 
-require("nvim-treesitter.configs").setup({
-    auto_install = false,
+vim.api.nvim_create_autocmd("FileType", {
+    callback = function(args)
+        local buf, filetype = args.buf, args.match
 
-    indent = {
-        enable = true,
-    },
+        local language = vim.treesitter.language.get_lang(filetype)
 
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    },
+        if not language then
+            return
+        end
 
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = false,
-            node_incremental = ";",
-            scope_incremental = false,
-            node_decremental = ",",
-        },
-    },
+        -- Check if there is a parser for the language
+        if not vim.treesitter.language.add(language) then
+            return
+        end
+
+        -- Enable treesitter highlighting and disable regex syntax
+        vim.treesitter.start(buf, language)
+
+        -- Enable treesitter based folding
+        vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        vim.wo.foldmethod = "expr"
+    end,
 })

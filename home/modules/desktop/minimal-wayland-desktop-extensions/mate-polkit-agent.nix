@@ -11,7 +11,7 @@ let
 in
 {
   home.packages = [
-    pkgs.mate.mate-polkit
+    pkgs.mate-polkit
   ];
 
   systemd.user.services.mate-polkit-agent = {
@@ -24,7 +24,7 @@ in
     Service = {
       Type = "simple";
       Restart = "always";
-      ExecStart = "${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1";
+      ExecStart = "${pkgs.mate-polkit}/libexec/polkit-mate-authentication-agent-1";
     };
 
     Install = {

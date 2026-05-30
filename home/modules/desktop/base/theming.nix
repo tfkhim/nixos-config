@@ -34,6 +34,8 @@ in
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
 
     gtk3.extraConfig = extraConfig3And4;
+
+    gtk4.theme = config.gtk.theme;
     gtk4.extraConfig = extraConfig3And4;
   };
 

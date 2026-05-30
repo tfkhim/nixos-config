@@ -80,15 +80,17 @@ in
   # https://man.archlinux.org/man/resolved.conf.5.en#OPTIONS
   services.resolved = {
     enable = true;
-    # This ensures all queries are forwarded to dnscrypt-proxy. If a link has a
-    # more specific query (e.g. my.network) the queries (e.g. host.my.network)
-    # for this domain will be sent to the DNS server of the link instead.
-    domains = [ "~." ];
+    settings.Resolve = {
+      # This ensures all queries are forwarded to dnscrypt-proxy. If a link has a
+      # more specific query (e.g. my.network) the queries (e.g. host.my.network)
+      # for this domain will be sent to the DNS server of the link instead.
+      Domains = [ "~." ];
 
-    # systemd-resolved has a compiled in list of fallback DNS resolvers. Using an
-    # empty list for this setting will result in resolved using this list. But
-    # having fallback resolvers may hide problems with the setup. Therefore the
-    # fallbacks are as well set to the dnscrypt-proxy service.
-    fallbackDns = [ dnsProxyAddress ];
+      # systemd-resolved has a compiled in list of fallback DNS resolvers. Using an
+      # empty list for this setting will result in resolved using this list. But
+      # having fallback resolvers may hide problems with the setup. Therefore the
+      # fallbacks are as well set to the dnscrypt-proxy service.
+      FallbackDNS = [ dnsProxyAddress ];
+    };
   };
 }

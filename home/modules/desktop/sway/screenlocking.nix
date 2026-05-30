@@ -36,7 +36,7 @@ in
 
   services.swayidle = mkIf swaylockEnabled {
     enable = true;
-    systemdTarget = config.custom.tfkhim.desktops.sway.systemdTarget;
+    systemdTargets = [ config.custom.tfkhim.desktops.sway.systemdTarget ];
 
     timeouts = [
       {
@@ -54,11 +54,6 @@ in
       })
     ];
 
-    events = [
-      {
-        event = "before-sleep";
-        command = swaylock;
-      }
-    ];
+    events.before-sleep = swaylock;
   };
 }

@@ -12,7 +12,10 @@
     enable = true;
     defaultEditor = true;
 
-    extraLuaConfig = ''
+    withRuby = false;
+    withPython3 = false;
+
+    initLua = ''
       -- This module must be loaded first because it contains
       -- global variable setups that must happen before loading
       -- any plugins.

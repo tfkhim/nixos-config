@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
         local supports = function(method)
             local client = vim.lsp.get_client_by_id(event.data.client_id)
-            return client and client.supports_method(method)
+            return client and client:supports_method(method)
         end
 
         map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
