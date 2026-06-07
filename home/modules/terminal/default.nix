@@ -12,6 +12,7 @@
     ./direnv.nix
     ./git.nix
     ./gpg.nix
+    ./helix.nix
     ./neovim
     ./ssh
     ./starship.nix
