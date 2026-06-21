@@ -26,5 +26,13 @@ vim.api.nvim_create_autocmd("FileType", {
         -- Enable treesitter based folding
         vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
         vim.wo.foldmethod = "expr"
+
+        vim.keymap.set("v", ";", function()
+            vim.treesitter.select("parent")
+        end, { buffer = buf, desc = "Extend selection to parent" })
+
+        vim.keymap.set("v", ",", function()
+            vim.treesitter.select("child")
+        end, { buffer = buf, desc = "Restrict selection to child" })
     end,
 })
