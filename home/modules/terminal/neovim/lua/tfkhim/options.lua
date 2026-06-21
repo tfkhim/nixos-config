@@ -48,6 +48,9 @@ vim.opt.scrolloff = 10
 
 vim.opt.foldlevel = 10
 
+-- Show a dialog instead of failing when buffers are not saved
+vim.o.confirm = true
+
 -- This setting makes tab completion behave more similar to the
 -- completion in the shell. The first press completes as much as
 -- possible and also shows a menu with candidates. The follow-up
