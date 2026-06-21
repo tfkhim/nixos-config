@@ -8,6 +8,7 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- No need for netrw, because this config uses nvim-tree
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
@@ -20,6 +21,7 @@ vim.keymap.set("n", "<leader>tr", function()
     vim.opt.relativenumber = not vim.opt.relativenumber:get()
 end, { desc = "[T]oggle [R]elative numbers" })
 
+-- Indent wrapped lines
 vim.opt.breakindent = true
 
 vim.opt.ignorecase = true
