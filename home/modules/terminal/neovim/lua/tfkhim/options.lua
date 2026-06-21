@@ -24,6 +24,9 @@ end, { desc = "[T]oggle [R]elative numbers" })
 -- Indent wrapped lines
 vim.opt.breakindent = true
 
+-- Enable undo/redo changes even after closing and reopening a file
+vim.opt.undofile = true
+
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
