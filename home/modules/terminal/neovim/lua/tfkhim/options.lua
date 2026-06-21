@@ -36,6 +36,10 @@ vim.opt.updatetime = 500
 
 vim.opt.timeoutlen = 600
 
+-- Configure how new splits should be opened
+vim.o.splitright = true
+vim.o.splitbelow = true
+
 vim.opt.inccommand = "split"
 
 vim.opt.cursorline = true
