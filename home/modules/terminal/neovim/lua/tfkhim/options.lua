@@ -61,7 +61,25 @@ vim.opt.wildmenu = true
 vim.opt.hlsearch = true
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR><Esc>")
 
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
-
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
+
+vim.diagnostic.config({
+    virtual_text = true,
+
+    update_in_insert = false,
+    severity_sort = true,
+    float = { source = "if_many" },
+    underline = { severity = { min = vim.diagnostic.severity.WARN } },
+
+    -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+    jump = {
+        on_jump = function(_, bufnr)
+            vim.diagnostic.open_float({
+                bufnr = bufnr,
+                scope = "cursor",
+                focus = false,
+            })
+        end,
+    },
+})
