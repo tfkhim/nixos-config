@@ -24,6 +24,7 @@
       require("tfkhim.treesitter")
       require("tfkhim.flash")
       require("tfkhim.lsp")
+      require("tfkhim.compilers")
       require("tfkhim.completion")
       require("tfkhim.fidget")
       require("tfkhim.neotest")
