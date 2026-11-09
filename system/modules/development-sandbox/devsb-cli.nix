@@ -30,7 +30,7 @@ let
     set -euo pipefail
 
     function hasSandboxRemote() {
-      ${git} remotes show | grep -q "${cfg.vmName}" && echo true || echo false
+      ${git} remote show | grep -q "${cfg.vmName}" && echo true || echo false
     }
 
     function getRemoteDir() {
