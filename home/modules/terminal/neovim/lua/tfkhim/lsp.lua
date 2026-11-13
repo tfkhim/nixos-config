@@ -49,6 +49,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
         map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
         map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+        map("<leader>cf", vim.lsp.buf.format, "[C]ode [F]ormat")
 
         if supports(vim.lsp.protocol.Methods.textDocument_inlayHint) then
             map("<leader>th", function()
