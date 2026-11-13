@@ -13,7 +13,7 @@ local lsp_file_capabilities = require("lsp-file-operations").default_capabilitie
 local capabilities = vim.tbl_deep_extend("force", client_capabilities, cmp_lsp_capabilities, lsp_file_capabilities)
 
 vim.lsp.config("*", { capabilities = capabilities })
-vim.lsp.enable({ "rust_analyzer", "nil_ls", "kotlin_language_server" })
+vim.lsp.enable({ "biome", "rust_analyzer", "nil_ls", "kotlin_language_server" })
 
 require("typescript-tools").setup({ capabilities = capabilities })
 
