@@ -23,6 +23,7 @@
       require("tfkhim.telescope")
       require("tfkhim.treesitter")
       require("tfkhim.flash")
+      require("tfkhim.git")
       require("tfkhim.lsp")
       require("tfkhim.compilers")
       require("tfkhim.completion")
@@ -39,6 +40,10 @@
           telescope-nvim
           telescope-fzf-native-nvim
           telescope-ui-select-nvim
+        ];
+        gitPlugins = [
+          diffview-nvim
+          gitsigns-nvim
         ];
         lspPlugins = [
           nvim-lsp-file-operations
@@ -77,6 +82,7 @@
         markdown-preview-nvim
       ]
       ++ telescopePlugins
+      ++ gitPlugins
       ++ lspPlugins
       ++ completionPlugins
       ++ neotestPlugins;
